@@ -6,15 +6,99 @@
 #set page(numbering: "1")
 
 = Introduction
+== AI Usage
+
+AI was used only in the Introduction to help with formulation.
 
 == Goal
 
-- Measuring the dampening with various methods
+The goal of this experiment is to investigate the damping of a rotary pendulum
+using different measurement methods. The damping constant $delta$ is determined
+from the decrease of the amplitude of a free oscillation, the half-width of a
+resonance curve, and the resonance amplification. The results are then compared.
 
 == Foundations
 
+The experiment uses a rotary pendulum (Pohl's wheel). For a damped free
+oscillation, the angular displacement is
+
+$ phi(t) = phi_0 e^(-delta t) sin(omega_f t) , $
+
+where $delta$ is the damping constant and $omega_f$ is the angular frequency of
+the damped oscillation. The amplitude therefore decreases exponentially:
+
+$ a(t) = a_0 e^(-delta t). $
+
+The damping constant can be determined from the half-life of the amplitude,
+defined by $a(t_(1/2)) = a_0/2$:
+
+$ delta = ln(2) / t_(1/2). $
+
+The damped and undamped angular frequencies are related by
+
+$ omega_f = sqrt(omega_0^2 - delta^2). $
+
+When the pendulum is driven periodically with angular frequency $omega$, a
+forced oscillation is produced. After the transient motion has decayed, the
+stationary amplitude is
+
+$ b(omega) = (A omega_0^2) / sqrt((omega_0^2 - omega^2)^2 + (2delta omega)^2), $
+
+where $A$ is the amplitude of the excitation. The amplitude reaches its maximum
+at the resonance frequency
+
+$ omega' = sqrt(omega_0^2 - 2delta^2). $
+
+For weak damping, $omega' approx omega_0$. The damping can also be obtained from
+the half-width $H$ of the resonance curve:
+
+$ H = omega_2 - omega_1 = 2delta, $
+
+where $omega_1$ and $omega_2$ are the frequencies at which the squared amplitude
+has fallen to half its maximum value. Another measure of damping is given by the
+resonance amplification,
+
+$ b(omega') / b(omega -> 0) = omega_0 / (2delta). $
+
+== Measurement
+
+The experiment is carried out using a rotary pendulum with an eddy-current brake
+for controlled damping. A stepper motor with an eccentric provides the periodic
+excitation. Its controller and power supply drive the motor, while a function
+generator provides the TTL square-wave control signal. A separate power supply
+is used for the eddy-current brake. The setup is shown in the sketch below.
+
+First, the undamped oscillation period $T_0$ is measured by timing three times
+20 oscillations.
+
+The damping is then switched on for two different brake currents. For each
+current, the time it takes for the amplitude to decay to $5%$ of the original
+amplitude is recorded and is used to determine how long to perform the following
+experiment:
+
+The amplitude of the freely oscillating pendulum is recorded at successive
+reversal points and plotted on a logarithmic scale.
+
+For the forced oscillation, the stationary amplitude is measured for different
+excitation frequencies between 0.1 and 1Hz and for both damping values. The
+resonance curve is used to determine the resonance frequency, half-width, and
+resonance amplification. The phase difference between the exciter and the
+pendulum is also observed at low frequency, near resonance, and at high
+frequency.
+
 = Protocol
 
+#figure(
+    stack(
+        box(
+            image("13.pdf", page: 2),
+            clip: true,
+            inset: (top: -5.6in, bottom: -0.2in),
+        ),
+        image("13.pdf", page: 3),
+    ),
+    caption: [Protocol],
+)
 
 == Sketch
 
@@ -49,14 +133,20 @@ errors, but I am going to write out the important steps here as well.
 
 == Determining the dampening constant with the amplitude decrease of the free ociallation
 
-We assumed our error to be $qty("1", "Degree")$. @plot1 shows the amplitude as
-function of the number of oscillations. To determine the dampening constant, we
-performed the following steps:
+We assumed our error to be $qty("1", "Degree")$, because the Aesolution of our
+Scale was $2°$.
+
+@plot1 shows the amplitude as function of the number of oscillations. To
+determine the dampening constant, we performed the following steps:
 + matching regression lines through the values
 + determining the half-life of the amplitude $t_(1/2)$
 We know from the introduction (TODO reference), that we can compute $delta$
 using (TODO Reference)
-$ delta = ln(2)/t_(1/2) $<delta>
+$ delta = ln(2)/T_(1/2) $<delta>
+
+where $T_(1/2)$ is the half-life of the amplitude in seconds. (We are going to
+denote the half-life of the amplitude measured in the number of Periods as
+$t_(1/2)$)
 
 To estimate the error $Delta delta$, I estimated the orange lines to be a lower
 and upper bound on the $1 sigma$-Intervall of the slope of the regression lines.
@@ -65,8 +155,13 @@ and lower bound on the $1sigma$-Intervall of $t_(1/2)$. I then used the bound
 which was the farthest from the value of $t_(1/2)$ as an upper bound on the
 error of $t_(1/2)$, which gave me the following two values for $t_(1/2)$
 
-$ "40mA Dampening:" t_(1/2) = qty("3.4+-0.5", "s") $
-$ "55mA Dampening:" t_(1_2) = qty("1.95+-0.2", "s") $
+$ "40mA Dampening:" t_(1/2) = num("3.4+-0.5") "Periods" $
+$ "55mA Dampening:" t_(1_2) = num("1.95+-0.2") "Periods" $
+We have to multply by the period $T$ that we determined earlier:
+
+$ "40mA Dampening:" T_(1/2) = t_(1/2) dot T = qty("7.4+-1.1", "s") $
+$ "55mA Dampening:" T_(1_2) = t_(1/2) dot T = qty("4.2+-0.4", "s") $
+
 
 Using @delta, we get
 
@@ -76,7 +171,19 @@ Using @delta, we get
 
 ]
 
+
 Error Propagation by Hand: TODO
+
+$ dif T_(1/2) = t_(1/2) dif T + T dif t_(1/2) $
+$ Delta T_(1/2) = sqrt((t_(1/2) Delta T)^2 + (T Delta t_(1/2))^2) $
+
+
+$ dif delta = - ln(2)/(T_(1/2)^2) dif T_(1/2) $
+$
+    Delta delta = abs(-ln(2)/(T_(1/2)^2) Delta T_(1/2)) = ln(2)/(T_(1/2)^2) dif T_(1/2)
+$
+
+
 
 #figure(
     image("Christian/V13_plots.pdf", page: 3),
@@ -89,26 +196,31 @@ Error Propagation by Hand: TODO
 
 In @plot2 I plotted the amplitude as a function of the excitation frequency.
 
+We assumed an error of $1°$ when reading out the amplitude. We observed the
+frequency of the frequency generator varying in a range of about $2 "Hz"$. The
+error of the scale of the device ($0.1"Hz"$) is neglegible compared to this.
+
+We also chose to ignore the error of the frequency varying in a $2 "Hz"$ range,
+because it is neglegible compared to the error we had when measuring the
+amplitude.
+
 One important parameter of the curve is the half-width $H$, which speicifies the
 difference of the two Frequencies $w_2 - w_1$ where the Amplitude $b(omega)$
-reaches $b(w')/sqrt(2)$ (with the resonance frequency $omega'$). TODO genauer,
-hier ists ja noch die eneratorfrequenz
+reaches $b(w')/sqrt(2)$ (with the resonance frequency $omega'$).
 
-$ "40mA Dampening:" H = qty("120+-10", "Hz") $
-$ "55mA Dampening:" H = qty("200+-10", "Hz") $
+$ "40mA Dampening:" H_g = qty("120+-10", "Hz") $
+$ "55mA Dampening:" H_g = qty("200+-10", "Hz") $
 
-Estimating the error of this Half-width proved to be quite difficult.
-Theoretically, we would have to take into account the error of the
-resonanc-curve that we fitted to our measurement, but this is difficult to
-estimate, especially on paper. I approximated the curve by just connecting our
-measurement with straight lines. This is reasonably accurate, because we took
-many measurements in the area aorund the peak, where the slope changes a lot.
+We assumed the error to be $10 "Hz"$ because of the resolution of the graph
+paper (which is $20 "Hz"$).
 
-The error of $10 "Hz"$ comes from the resolution of the graph paper.
+$H_g$ is still in Terms of the generator frequency, we have to divide by $4000$
+to get the excitation frequency:
 
-After dividing by $4000$ to get the excitation frequency, we can then use
-Formula (TODO Reference) to calculate delta
+$ "40mA Dampening:" H_g = qty("0.030+-0.0025", "Hz") $
+$ "55mA Dampening:" H_g = qty("0.050+-0.0025", "Hz") $
 
+Now we can then use Formula (TODO Reference) to calculate $delta$:
 
 #rect[
     $ "40mA Dampening:" delta = qty("0.094+-0.008", "Hz") $
@@ -119,7 +231,6 @@ Formula (TODO Reference) to calculate delta
     rotate(image("Christian/V13_plots.pdf", page: 2), -90deg),
     caption: [Amplitude as a function of the frequency of the motor],
 )<plot2>
-TODO als funktion von generatorfrquenc plotten wär besser
 
 == Calculation using resonance amplification
 
@@ -129,8 +240,10 @@ $ b_max / b_0 = omega_0 / (2 delta) $
 with $b_max$ being the maximum amplitude and $b_0$ being the amplitude as the
 frequency tends to zero.
 
-Using our measurements for $b_max$, $b_0$ and $omega_0$, we can calculate
-$delta$ this way:
+Using our measurements for $b_max$, $b_0$ and
+$omega_0 = (2 pi)/T = qty("2.884+-0.015", "Hz")$, we can calculate $delta$:
+
+$ delta = (omega_0 b_0)/(2 b_max) $
 
 #align(center)[
     #table(
@@ -144,9 +257,21 @@ $delta$ this way:
         "50mA Dampening", num("22.0+-1.0"), num("2.5+-1.0"), num("0.16+-0.07"),
     )]
 
+Error Propagation by Hand:
+
+$
+    dif delta = b_0 / (2 b_max) dif w_0 + omega_0 / (2 b_max) dif b_0 - (2 w_0 b_0)/(2 b_max)^2 dif b_max
+$
+
+$
+    Delta delta = sqrt((b_0 / (2 b_max) Delta w_0)^2 + (omega_0 / (2 b_max) Delta b_0)^2 + ((2 w_0 b_0)/(2 b_max)^2 Delta b_max)^2)
+$
+
+
+
 == Phase shift
 For very small frequencies, we observed no phase difference between the exciter
-andthe pendulum. At the resonance frequency, there was a phase shit of $pi/2$
+and the pendulum. At the resonance frequency, there was a phase shit of $pi/2$
 and at very high frequencies, there was a phase difference of $pi$.
 
 = Results:
@@ -215,12 +340,17 @@ A possible cause for this could be, that there were other friction factors, that
 were not proportional to $dot(phi)$ (for example static friction), which got
 bigger at smaller velocities and amplitudes.
 
-== Task 5
 
-- Error analysis difficult (especially on paper because we can't fit different
-curves) (Error of frequency generator vlt)
+== Half Width
+Estimating the error of the Half-width that we measured graphically proved to be
+quite difficult. Theoretically, we would have to take into account the error of
+the resonanc-curve that we fitted to our measurement, but this is difficult to
+estimate, especially on paper. I approximated the curve by just connecting our
+measurement with straight lines. This is reasonably accurate, because we took
+many measurements in the area aorund the peak, where the slope changes a lot.
 
-- Passt prima mit Fehler
-
-
+== Resonance Amplification
+The error of the resonance amplification is very big compared to the other
+methods. The main reason for this, is that we had an error of $1°$ for measuring
+the amplitude, which is very big compared to the small amplitudes ($2.5°$).
 
