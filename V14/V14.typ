@@ -61,7 +61,7 @@ Wenn sich die Amplitude während der Messung stark verändert, ist es also genau
 also Korrekturfaktor den Durchschnitt über alle Korrekturfaktoren zu verwenden:
 $ K_a' = 1/N (sum_(i = 1)^N K_a (phi_i)) $
 
-
+TODO Korrekturfaktor abschätzen
 
 Damit haben wir am Ende:
 
