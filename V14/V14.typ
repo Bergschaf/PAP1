@@ -23,18 +23,37 @@ der Korrekturfaktor ab.
 
 Sei $phi_i$ die Amplitude (maximale Auslenkung innerhalb einer Periode) der
 $i$-ten Periode und $T_i$ die dauer der $i$-ten Periode: Damit gilt
-$ (T_4^i)^2 = T_2^2 (1 + K_a (phi_i)) $
+$ (T_i)^2 = T_2^2 (1 + K_a (phi_i)) $<T_i_quadrat>
 Es gilt also: Wir können die gesamte gemessene Zeit als Summe der einzelnen
-Perioden darstellen:
-$ T_4^2 = (1/N sum_(i = 1)^N T_4^i)^2 $
-Da die Summanden hier alle relativ ähnlich sind, ist folgende abschätzung
-Möglich:
+Perioden darstellen (Damit ist $T_4$ die durchschnittliche Periodendauer aus
+allen Perioden):
+$ T_4 = 1/N sum_(i = 1)^N T_i $
+
+Betrachten wir folgenden Term:
+
+$
+    sum_i^N (T_i - T_4)^2 & = sum_i^N (T_i^2 - 2T_i T_4 + T_4^2) \
+                          & = sum_i^N T_i^2 - sum_i^N 2 T_i T_4 + sum_i^N T_4^2 \
+                          & = sum_i^N T_i^2 - 2 T_4 sum_i^N T_i + N T_4^2 \
+                          & "Es gilt per Definition " sum_i^N T_i = N T_4 \
+                          & = sum_i^N T_i^2 - 2 N T_4^2 + N T_4^2 \
+                          & = (sum_i^N T_i^2) - N T_4^2 \
+                          & = (sum_i^N T_i^2) - (sum_i^N T_i)^2 \
+$
+
+Wir haben also:
+$ (sum_i^N T_i)^2 = sum_i^N T_i^2 - sum_i^N (T_i - T_4)^2 $<geile_gleichung>
+
+Wir nehmen an, dass die Varianz der Periodendauern klein ist:
+$ "Var"(T) = sum_i^N (T_i - T_4)^2 << 1 $
+Damit können wir mit @geile_gleichung folgende abschätzung treffen:
 
 $
     (1/N sum_(i = 1)^N T_4^i)^2 approx 1/N^2 dot N sum_(i = 1)^N (T_4^i)^2
 $<quadrat_approx>
-
+Diese können wir hier zusammen mit @T_i_quadrat anwenden:
 $
+    T_4^2 approx
     1/N sum_(i = 1)^N (T_4^i)^2= 1/N sum_(i = 1)^N T_2^2 (1 + K_a (phi_i)) = T_2^2(1 + 1/N (sum_(i = 1)^N K_a (phi_i)))
 $
 
@@ -43,7 +62,6 @@ also Korrekturfaktor den Durchschnitt über alle Korrekturfaktoren zu verwenden:
 $ K_a' = 1/N (sum_(i = 1)^N K_a (phi_i)) $
 
 
-#line()
 
 Damit haben wir am Ende:
 
@@ -88,7 +106,8 @@ Mit der maximalen Amplitude $phi_0 = 11.47 °$
 $ K_a = phi_0^2/8 = num("5.46e-3") $
 
 Wie wir bereits in der Einleitung festgestellt haben überschätzt dieser
-Korrekturfaktor die Korrektur stark, da die Auslenkung stark abfällt.
+Korrekturfaktor die Korrektur stark, da die Auslenkung im laufe des Versuchs
+stark abfällt.
 
 Refrenz gleichung TODO Einführung
 
