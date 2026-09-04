@@ -15,3 +15,7 @@ $
 
 $ m dot.double(x) + J R^2 dot.double(x) - m g sin(alpha) = 0 $
 
+
+== Beschleunigung des Schwerpunkt
+
+
