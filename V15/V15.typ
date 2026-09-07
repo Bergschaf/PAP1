@@ -153,7 +153,7 @@ TODOOOO Fancy zeichnung für Höhenberechnung
 Es gilt:
 
 $
-    E_"kin" = E_"trans" + E_"rot" = 1/2 m v^2 + 1/2 J omega^2 = 1/2 m v^2 + 1/2 J (R v)^2
+    E_"kin" = E_"trans" + E_"rot" = 1/2 m v^2 + 1/2 J omega^2 = 1/2 m v^2 + 1/2 J (v/R)^2
 $
 
 

@@ -63,8 +63,8 @@
     body
 }
 #show: project.with(
-    title: "Moment of Intertia",
-    versuch_nr: "12",
+    title: "Resonance",
+    versuch_nr: "13",
     authors: (
         (
             name: "Christian Krause",
@@ -167,12 +167,8 @@ frequency.
 
 #figure(
     stack(
-        box(
-            image("13.pdf", page: 2),
-            clip: true,
-            inset: (top: -5.6in, bottom: -0.2in),
-        ),
-        image("13.pdf", page: 3),
+        image("Protokoll_Teil_1.jpg"),
+        image("Protokoll_Teil_2.jpg"),
     ),
     caption: [Protocol],
 )
