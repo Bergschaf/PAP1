@@ -3,6 +3,25 @@
 
 = Einleitung
 
+== Ziel
+
+TODO
+
+== Physikalische Grundlagen
+Für die Periodendauer $T_D$ einer Drehschwingung gilt:
+
+$ T_D = 2pi sqrt(J/D) $
+mit dem Trägheitsmoment $J$ bzgl. der Drehachse und der Winkelrichtgröße $D$ des
+Pendels (analog zur Rückstellkraft bei einem linearen Pendel). Für das
+Trägheitsmoment erhalten wir mit dem Steinernen Satz:
+$ J = J_K + J_F = 2/5 m_K r^2 + m_k l^2 + 1/3 m_F l'^2 $
+mit der Kugelmasse $m_K$, dem Radius $r$ der Kugel, der Masse $m_F$ des Fadens
+und der Fadenlänge $l'$ (Pendellänge: $l := l' + r$).
+
+Für das Rücktreibende Drehmoment TODO TODO
+
+
+$ D = m_K g l [1 - (rho_l/rho_k - 1/2 m_F/m_K)] $
 
 $ T_1^2 = 4 pi^2 l/g (1 + 2/5 r^2/l^2 + rho_L/rho_K - 1/6 m_F/m_K) $
 
