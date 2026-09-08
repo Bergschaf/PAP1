@@ -23,6 +23,8 @@ Für das Rücktreibende Drehmoment TODO TODO
 
 $ D = m_K g l [1 - (rho_l/rho_k - 1/2 m_F/m_K)] $
 
+
+
 $ T_1^2 = 4 pi^2 l/g (1 + 2/5 r^2/l^2 + rho_L/rho_K - 1/6 m_F/m_K) $
 
 Korrekturterme:
