@@ -1,6 +1,86 @@
 #import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
 #set math.equation(numbering: "(1)")
 
+#let project(
+    title: "",
+    versuch_nr: "",
+    authors: (),
+    tutor: "",
+    date: "",
+    body,
+) = {
+    // Metadaten
+    set document(author: authors.map(a => a.name), title: title)
+
+    // Seitenlayout
+    set page(
+        paper: "a4",
+        margin: (left: 25mm, right: 25mm, top: 25mm, bottom: 25mm),
+        numbering: "1 / 1",
+        number-align: center,
+    )
+
+    // Schriftart und Textsatz
+    set text(font: "New Computer Modern", size: 11pt, lang: "de")
+    set par(justify: true, leading: 0.65em)
+    set heading(numbering: "1.1")
+
+    // Titelblatt / Kopfzeile
+    align(center)[
+        #text(weight: "bold", size: 16pt)[Physikalisches Anfängerpraktikum der
+            Universität Heidelberg] \
+        #v(1em)
+        #text(weight: "bold", size: 22pt)[Versuch #versuch_nr]
+
+        #text(weight: "bold", size: 22pt)[#title] \
+        #v(2em)
+    ]
+
+    grid(
+        columns: (2fr, 1fr),
+        align(left)[
+            *Durchführende(r):* \
+            #authors.at(0).name (#authors.at(0).email) \
+            #v(0.5em)
+            *Partner(in):* \
+            #authors.at(1).name
+        ],
+        align(right)[
+            *Tutor(in):* \
+            #tutor \
+
+            *Datum der Durchführung:* #date \
+        ],
+    )
+
+    v(3em)
+
+    // Inhaltsverzeichnis
+    outline(title: "Inhaltsverzeichnis", depth: 2)
+    pagebreak()
+
+    body
+}
+#show: project.with(
+    title: "Mathematisches Pendel",
+    versuch_nr: "13",
+    authors: (
+        (
+            name: "Christian Krause",
+            email: "christian.krause@stud.uni-heidelberg.de",
+        ),
+        (name: "Aaron Boheim", email: "aaron.boheim@stud.uni-heidelberg.de"),
+    ),
+    tutor: "Pham Huy Thang Le ",
+    date: "3.09.2026",
+)
+
+#import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#set math.equation(numbering: "(1)")
+
+
+#set page(numbering: "1")
+
 = Einleitung
 
 == Ziel
@@ -52,18 +132,52 @@ Damit erhalten wir als erste Abschätzung für die Periodendauer:
 
 $ T_1^2 = 4 pi^2 l/g (1 + 2/5 r^2/l^2 + rho_L/rho_K - 1/6 m_F/m_K) $
 
-Korrekturterme:
 
-$ K_delta = delta^2 / omega_0^2 $
-$ T_2^2 = T_1^2 (1 + K_delta) $
-$ K_a = phi_0^2 / 8 $
-$ T_3^2 = T_2^2 (1 + K_a) $
+==== Korrektur der Dämpfung
 
-== Korrekturfaktor für die Amplitude
-Wir haben in (TODO Reference) der Einleitung bereits festgestellt, dass für eine
-Periodendauer mit der maximalen Auslenkung $phi_0$ in erster nährerung der
-Korrekturfaktor $K_a (phi_0) = phi_0^2/8$ eingesetz werden kann:
-$ T_3^2 = T_2^2 (1 + K_a (phi_0)) = T_2^2 (1+ phi_0^2/8) $
+Durch die Luftreibung wird die Schwingung gedämpft. Für eine Dämpfung
+proportional zur Winkelgeschwindigkeit gilt für die Kreisfrequenz der gedämpften
+Schwingung:
+
+$ omega_3^2 = omega_2^2 - delta^2 $
+
+wobei $delta$ die Dämpfungskonstante ist. Für eine kleine Dämpfung gilt daher:
+
+$
+    omega_3^2 & = omega_2^2 (1 - delta^2/omega_2^2)
+$
+
+Durch die Beziehung $T = 2pi/omega$ folgt nach Entwicklung bis zur ersten
+nichtverschwindenden Ordnung:
+
+$ T_2^2 = T_1^2 (1 + delta^2/omega_2^2) $
+
+Damit ist der Korrekturfaktor der Dämpfung
+
+$ K_delta = delta^2/omega_0^2 $
+
+wobei $omega_0$ die ungedämpfte Kreisfrequenz bezeichnet. Da die Dämpfung
+quadratisch in den Korrekturfaktor eingeht, ist dieser Effekt bei einer kleinen
+Dämpfung sehr klein.
+
+==== Korrektur der Amplitude
+
+Die Herleitung im Anhang des Versuchsleitfadens zeigt, dass die Periodendauer
+eines Pendels von der maximalen Auslenkung $phi_0$ abhängt. Für kleine Winkel
+ergibt sich:
+
+$ T_3^2 = T_2^2 (1 + phi_0^2/8) $
+
+Daraus folgt der Korrekturfaktor
+
+$ K_a (phi_0) = phi_0^2/8 $
+
+Die Korrektur entsteht dadurch, dass bei größeren Auslenkungen die Näherung
+$sin(phi) approx phi$ nicht mehr exakt ist. Das Pendel benötigt dann etwas mehr
+Zeit für eine vollständige Schwingung. Der Korrekturterm ist quadratisch in der
+Amplitude und wird deshalb bei kleinen Winkeln schnell klein. Die Herleitung
+über das elliptische Integral ist im Anhang des Versuchsleitfadens angegeben.
+
 
 Da die Amplitude im laufe des Experiments aber exponentiell abnimmt, nimmt auch
 der Korrekturfaktor ab.
@@ -106,9 +220,7 @@ $
 
 Wenn sich die Amplitude während der Messung stark verändert, ist es also genauer
 also Korrekturfaktor den Durchschnitt über alle Korrekturfaktoren zu verwenden:
-$ K_a' = 1/N (sum_(i = 1)^N K_a (phi_i)) $
-
-TODO Korrekturfaktor abschätzen
+$ K_a' = 1/N (sum_(i = 1)^N K_a (phi_i)) $<K_a_besser>
 
 Damit haben wir am Ende:
 
@@ -117,9 +229,6 @@ $
 $
 
 
-== Durchführung
-
-TODO
 
 = Protokoll
 
@@ -130,7 +239,10 @@ TODO
 == Skizze
 
 
-TODO
+#figure(
+    image("Skizze.pdf", page: 1),
+    caption: "Skizze",
+)
 
 = Auswertung
 
@@ -142,12 +254,11 @@ Um die Länge möglichst genau zu messen, haben wir den Abstand von der Aufhäng
 des Fadens zur Ober- und Unterkannte der Kugel jeweils drei mal gemessen. Dabei
 gehen wir von einem Messfehler von $Delta l = qty("1.0", "mm")$ aus.
 
-Aus diesen Messungen haben wir den Fehler des Mittelwerts berechnet (TODO
-Formel) und entsprechend der Gaußschen Fehlerfortpflanzung auf den Fehler
-$Delta l$ addiert.
+Aus diesen Messungen haben wir den Fehler des Mittelwerts berechnet und
+entsprechend der Gaußschen Fehlerfortpflanzung auf den Fehler $Delta l$ addiert.
 
-TODO genauer Am ende Erhalten wir aus dem Durchchschnitt der Länge der ober- und
-unterkante der Kugel eine Pendellänge
+Am ende erhalten wir aus dem Durchchschnitt der Länge der ober- und unterkante
+der Kugel eine Pendellänge
 $ l = qty("0.9257+-0.0010", "m") $
 
 
@@ -192,11 +303,9 @@ Ruhelage notiert, diesen in die Amplitude $a$ umgerechnet
     caption: [Amplitude logarithmisch als Funktion der Zeit],
 )<plot1>
 Wir haben `scipy.optimize.curve_fit` verwendet um durch lineare Regression den
-Wert für $delta$ (siehe gleichung TODO) zu bestimmen:
+Wert für die Dämpfung $delta$ zu bestimmen:
 
 $ delta = qty("7.00+-0.85e-4", "/s") $
-
-TODO chi quadrat vom fit
 
 == Korrekturterm Dämpfung $delta$
 Um den Korrekturterm für die Dämpfung zu bestimmen, berechnen wir zunächst
@@ -212,9 +321,15 @@ Wie wir bereits in der Einleitung festgestellt haben überschätzt dieser
 Korrekturfaktor die Korrektur stark, da die Auslenkung im laufe des Versuchs
 stark abfällt.
 
-Refrenz gleichung TODO Einführung
-
+Daher haben wir den angepassten Korrekturterm (siehe @K_a_besser) berechnet:
 $ K_a' = num("2.21e-3") $
+
+Damit lässt sich unser finaler Wert für $g$ in abhängigkeit von der gemessenen
+Periodendauer $T_g$ folgendermaßen berechnen:
+$
+    g = (4 pi^2 l)/T_g^2 (1 + 2/5 r^2/l^2 + rho_L/rho_K - 1/6 m_F/m_K + K_delta + K_a')
+$
+
 
 == Fehler für g
 
