@@ -76,7 +76,82 @@ $
 $
 Dieser Wert stimmt mit dem von Excel berechnetwen Wert (Tröpfchen 27) überein.
 
+Die Fehler wurden mit der Python-Bibliothek `uncertainties` berechnet.
+
+== Histogramm
+
+TODO
+
+== Obere Grenze für die Elementarladung
+
+TODO
+
+== Systematischer Fehler
+
+Wir haben manche Messungen über 10 Skalenteile durchgeführt, manche über 20. Da
+wir den Fehler lieber überschätzen, gehen wir im Folgenden von 10 Skalenteilen
+aus, also
+$ s = qty("5.00+-0.13e-4", "m") $
+Damit haben wir
+
+$ (3 Delta s)/(2 s) = 0.039 $
+
+Für die Öldichte nehmen wir an: $(Delta rho)/(rho) = 0.5 %$, für die Viskosität:
+$(Delta eta)/eta = 0.2 %$. Für den Abstand der Kondensatorplatten haben wir:
+$(Delta d)/d = 0.83%$ und für die Spannung $(Delta U)/U = 5%$.
+
+Damit können wir den Systematischen Fehler abschätzen:
+
+$
+    (Delta q)_"sys"/q = sqrt(((3 Delta s)/(2 s))^2 + ((Delta rho)/(2 rho))^2 + ((3 Delta eta)/(2 eta))^2 + ((Delta d)/d)^2 + ((Delta U)/U)^2) = 6.4%
+$
 
 
+Manage
+=== Vorfaktoren
 
+TODO
+
+== Statistischer Fehler
+Wir verwenden diese fünf Werte für $q$, die aus einem Tropfen berechnet wurden,
+der fünfmal gemessen wurde:
+$ q = [1.563,1.567,1.479,1.431,1.509] $
+Mit `np.std(q, ddof=1)` können wir den Fehler einer Einzelmessung bestimmen:
+$sigma_E = 0.058$. Dieser ist etwas kleiner als der in Excel berechnete Wert
+$sigma_E' = 0.072$. Eine gewisse Abweichung ist aber zu erwarten, da Excel alle
+Werte mit einbezieht, wir aber nur diese fünf Werte des einen Tropfens
+betrachten.
+
+Der Fehler des Mittelwerts ist damit:
+
+$ sigma_M = sigma_E / sqrt(N) = sigma_E / sqrt(62) = 0.0073 $
+
+Nach der Gausschen Fehlerfortpflanzung können wir den Fehler von $q$ berchnen:
+
+$ (Delta q)/ q = sqrt(((Delta q_"sys")/q)^2 + sigma_M^2) = 6.4 $
+
+= Ergebnisse
+
+#align(center, rect[
+    $ "Elementarladung:" e = qty("1.46+-0.09e-19", "C") $
+])
+Statistische siginifikanz zum Literaturwert: $e' = qty("1.6022e-19", "C")$
+
+$ z = abs(e' - e)/sqrt((Delta e')^2 + (Delta e)^2) = 1.52 $
+
+= Diskussion
+
+TODO
+
+== Histogramm
+In dem Histogramm (TODO Reference) sieht man sehr gut die quantisierung der
+Ladung....k
+
+== Fehler
+
+-> Systematischer Fehler überwiegt
+
+== Mögliche Fehlerquellen
+
+Komisch dass (fast) alle einser kleine rals 1.6022 sind
 
