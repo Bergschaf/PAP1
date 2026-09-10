@@ -1,7 +1,74 @@
 #import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#set math.equation(numbering: "1.")
 
 = Einleitung
-TODO
+
+== Ziel
+Mit dem Millikan Versuch werden wir die quantisierung der elektrostatischen
+Ladung festellen und die Größe einer Elementarladung messen.
+
+== Physikalische Grundlagen
+
+Auf ein fallendes Öltröpfchen wirken drei Kräfte:
+
+$ "Gravitationskraft: " F_g = m dot g = 4/3 pi r^3 rho_"Öl" g $
+$ "Auftriebskraft: " F_a = 4/3 pi r^3 rho_"Luft" g $
+$ "Stokesche Reibung: " F_r = 6 pi r eta v $
+
+Mit dem Radius $r$ der Kugel, der Erdbeschleunigung $g$ und der Geschwindigkeit
+$v$ des Tröpfchens. $eta$ bezeichnet die Viskosität der Luft, $rho_"Luft"$ und
+$rho_"Öl"$ die Dichte von Luft und Öl.
+
+Wenn das Tröpfchen eine elektrische Ladung $q$ trägt, wirkt in einem
+Plattenkondensator mit der Spannung $U$ und dem Plattenabstand zusätzlich noch
+die elektrische Kraft:
+
+$ F_"el" = q E = q U/d $
+
+Wir nehmen an, dass das Tröpfchen durch die Reibung sehr schnell die
+Terminalgeschwindigkeit erreicht und damit mit konstanter Geschwindigkeit fällt
+oder steigt. D.h. während des fallens gleichen sich die Kräft aus und es gilt:
+
+$
+    F_g &= F_a + F_r \
+    <=> 4/3 pi r^3 rho_"Öl" g &= 4/3 pi r^3 rho_"Luft" g + 6 pi r eta v_f \
+    <=> 4/3 pi r^2 rho_"Öl" g &= 4/3 pi r^2 rho_"Luft" g + 6 pi eta v_f quad "da " r!= 0 \
+    <=> r^2 rho_"Öl" &= r^2 rho_"Luft" + (6 pi eta v_f)/(4/3 pi g) \
+    <=> r^2 (rho_"Öl" - rho_"Luft") &= (9 pi eta v_f)/(2 pi g) \
+    <=> r^2 &= (9 eta v_f)/(2 g (rho_"Öl" - rho_"Luft")) \
+    <=> r&= sqrt((9 eta v_f)/(2 g rho)) quad "mit" rho = rho_"Öl" - rho_"Luft" \
+    \
+$
+
+Während des Steigens gilt:
+
+$
+    F_g + F_r &= F_a + F_"el" \
+    4/3 pi r^3 rho_"Öl" g + 6 pi r eta v_s &= 4/3 pi r^3 rho_"Luft" g+ q U/d \
+    4/3 pi r^3 rho_"Öl" g + 6 pi r eta v_s &= 4/3 pi r^3 rho_"Luft" g + q U/d \
+    q U/d &= 4/3 pi r^3 rho_"Öl" g + 6 pi r eta v_s - 4/3 pi r^3 rho_"Luft" g \
+    q &= d/U (4/3 pi r^3 (rho_"Öl" - rho_"Luft") g+ 6 pi r eta v_s) \
+    q &= d/U pi r (4/3 r^2 (rho_"Öl" - rho_"Luft")g + 6 eta v_s) \
+    q &= d/U pi r (4/3 ((9 eta v_f)/(2 g rho))rho g + 6 eta v_s) \
+    q &= d/U pi r (6 eta v_f + 6 eta v_s) \
+    q &= d/U 6 eta pi sqrt((9 eta v_f)/(2 g rho)) ( v_f + v_s) \
+    q &= d/U 6 pi sqrt((9 eta^3 v_f)/(2 g rho)) ( v_f + v_s) \
+$<q>
+
+Mit dieser Gleichung kann man die Ladung eines Tröpfchens in abhängigkeit von
+Fall- und Steiggeschwindigkeit berechnen. Hierbei wird allerdings angenommen,
+dass die Viskosität der Luft konstant ist, was für sehr kleine Tröfpchenradien
+nicht mehr genau stimmt. Dafür wird benutzen wir für die Viskosität die
+Cunningham Korrektur (die im Grenzwert für große Tröpfchen die gewöhnliche
+Viskosität liefert):
+
+$ eta(r) = eta_0 / (1 + b/(r p)) $<korrektur>
+
+Mit dem Radius $r$ des Tröfpchens, dem Luftdruck $p$ und der empirischen
+Konstante $b = qty("7.78e-3", "Pa m")$.
+
+
+
 = Durchführung
 
 Über die orangene Pumpe werden Öltröpfchen in den Plattenkondensator gebracht.
@@ -66,8 +133,8 @@ berechnen.
 
 Für die Gravitationskonstante $g$ verwenden wir $g = qty("9.81", "m/s^2")$.
 
-Mit dem Radius können wir die Cunningham-Korrektur des Stokeschen Gesetzes (TODO
-siehe einleitnug) berechnen:
+Mit dem Radius können wir die Cunningham-Korrektur des Stokeschen Gesetzes
+(siehe @korrektur) berechnen:
 $ eta = eta_0 / (1 + b/(r + p_L)) $
 mit dem Luftdruck $p_L = qty("1000.2", "hPa")$ und der Konstante
 $b = qty("7.78e-3", "Pa m")$.
@@ -75,7 +142,7 @@ $b = qty("7.78e-3", "Pa m")$.
 Der Plattenabstand des Kondensator beträgt $d = qty("6.00+-0.05e-3", "m")$. Für
 die Spannung hatten wir anfangs $500 V$ eingestellt, der Wert schwankte
 anschließend leicht, d.h. wir verwenden $U = qty("500.0+-2.0", "V")$. Damit
-können wir die Ladung des Tröpfchens berechnen (TODO reference einleitung):
+können wir die Ladung des Tröpfchens berechnen (siehe @q):
 
 $
     q = (v_f + v_s) sqrt((9 dot v_f eta^3)/(2 rho g)) (6 pi d)/U = qty("1.54+-0.07e-19", "C")
@@ -233,6 +300,11 @@ sytematischen Fehler beiträgt.
 
 == Mögliche Fehlerquellen
 
-Komisch dass (fast) alle einser kleine rals 1.6022 sind
+Wir haben die Zeitmessung immer direkt beim Umschalten der Spannung gestartet.
+Dadurch wird die Beschleunigungsphase, in der sich die Richtung der
+Geschwindigkeit der Tröpfchen ändert nicht berücksichtigt. Eine Möglicheit wäre
+gewesen, die Zeitmessung unabhängig von der Spannung zu machen d.h. man würde
+die Zeit stoppen wenn die Tröpfchen die gewünschte Distanz erreicht haben, die
+Spannung aber erst später umschalten und die Zeitmessung erst wieder starten
+wenn der Tropfen die Richtung gewechselt und die Skalenlinie überschritten hat.
 
-Beschleunigung nicht berücksichtigt
