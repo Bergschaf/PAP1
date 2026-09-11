@@ -1,4 +1,73 @@
 #import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#set math.equation(numbering: "1.")
+
+= Einleitung
+
+== Ziel
+Mit dem Millikan Versuch werden wir die quantisierung der elektrostatischen
+Ladung festellen und die Größe einer Elementarladung messen.
+
+== Physikalische Grundlagen
+
+Auf ein fallendes Öltröpfchen wirken drei Kräfte:
+
+$ "Gravitationskraft: " F_g = m dot g = 4/3 pi r^3 rho_"Öl" g $
+$ "Auftriebskraft: " F_a = 4/3 pi r^3 rho_"Luft" g $
+$ "Stokesche Reibung: " F_r = 6 pi r eta v $
+
+Mit dem Radius $r$ der Kugel, der Erdbeschleunigung $g$ und der Geschwindigkeit
+$v$ des Tröpfchens. $eta$ bezeichnet die Viskosität der Luft, $rho_"Luft"$ und
+$rho_"Öl"$ die Dichte von Luft und Öl.
+
+Wenn das Tröpfchen eine elektrische Ladung $q$ trägt, wirkt in einem
+Plattenkondensator mit der Spannung $U$ und dem Plattenabstand zusätzlich noch
+die elektrische Kraft:
+
+$ F_"el" = q E = q U/d $
+
+Wir nehmen an, dass das Tröpfchen durch die Reibung sehr schnell die
+Terminalgeschwindigkeit erreicht und damit mit konstanter Geschwindigkeit fällt
+oder steigt. D.h. während des fallens gleichen sich die Kräft aus und es gilt:
+
+$
+    F_g &= F_a + F_r \
+    <=> 4/3 pi r^3 rho_"Öl" g &= 4/3 pi r^3 rho_"Luft" g + 6 pi r eta v_f \
+    <=> 4/3 pi r^2 rho_"Öl" g &= 4/3 pi r^2 rho_"Luft" g + 6 pi eta v_f quad "da " r!= 0 \
+    <=> r^2 rho_"Öl" &= r^2 rho_"Luft" + (6 pi eta v_f)/(4/3 pi g) \
+    <=> r^2 (rho_"Öl" - rho_"Luft") &= (9 pi eta v_f)/(2 pi g) \
+    <=> r^2 &= (9 eta v_f)/(2 g (rho_"Öl" - rho_"Luft")) \
+    <=> r&= sqrt((9 eta v_f)/(2 g rho)) quad "mit" rho = rho_"Öl" - rho_"Luft" \
+    \
+$
+
+Während des Steigens gilt:
+
+$
+    F_g + F_r &= F_a + F_"el" \
+    4/3 pi r^3 rho_"Öl" g + 6 pi r eta v_s &= 4/3 pi r^3 rho_"Luft" g+ q U/d \
+    4/3 pi r^3 rho_"Öl" g + 6 pi r eta v_s &= 4/3 pi r^3 rho_"Luft" g + q U/d \
+    q U/d &= 4/3 pi r^3 rho_"Öl" g + 6 pi r eta v_s - 4/3 pi r^3 rho_"Luft" g \
+    q &= d/U (4/3 pi r^3 (rho_"Öl" - rho_"Luft") g+ 6 pi r eta v_s) \
+    q &= d/U pi r (4/3 r^2 (rho_"Öl" - rho_"Luft")g + 6 eta v_s) \
+    q &= d/U pi r (4/3 ((9 eta v_f)/(2 g rho))rho g + 6 eta v_s) \
+    q &= d/U pi r (6 eta v_f + 6 eta v_s) \
+    q &= d/U 6 eta pi sqrt((9 eta v_f)/(2 g rho)) ( v_f + v_s) \
+    q &= d/U 6 pi sqrt((9 eta^3 v_f)/(2 g rho)) ( v_f + v_s) \
+$<q>
+
+Mit dieser Gleichung kann man die Ladung eines Tröpfchens in abhängigkeit von
+Fall- und Steiggeschwindigkeit berechnen. Hierbei wird allerdings angenommen,
+dass die Viskosität der Luft konstant ist, was für sehr kleine Tröfpchenradien
+nicht mehr genau stimmt. Dafür wird benutzen wir für die Viskosität die
+Cunningham Korrektur (die im Grenzwert für große Tröpfchen die gewöhnliche
+Viskosität liefert):
+
+$ eta(r) = eta_0 / (1 + b/(r p)) $<korrektur>
+
+Mit dem Radius $r$ des Tröfpchens, dem Luftdruck $p$ und der empirischen
+Konstante $b = qty("7.78e-3", "Pa m")$.
+
+
 
 = Durchführung
 
@@ -20,7 +89,11 @@ Messwerte haben (davon mindestens 10 von einfach geladenen Tröpfchen).
 = Protokoll
 
 #figure(
-    image("Protokoll.pdf", page: 1),
+    scale(85%, stack(
+        spacing: -8em,
+        image("Protokoll.pdf", page: 1),
+        image("Protokoll.pdf", page: 2),
+    )),
     caption: [Messprotokoll],
 )
 
@@ -60,8 +133,8 @@ berechnen.
 
 Für die Gravitationskonstante $g$ verwenden wir $g = qty("9.81", "m/s^2")$.
 
-Mit dem Radius können wir die Cunningham-Korrektur des Stokeschen Gesetzes (TODO
-siehe einleitnug) berechnen:
+Mit dem Radius können wir die Cunningham-Korrektur des Stokeschen Gesetzes
+(siehe @korrektur) berechnen:
 $ eta = eta_0 / (1 + b/(r + p_L)) $
 mit dem Luftdruck $p_L = qty("1000.2", "hPa")$ und der Konstante
 $b = qty("7.78e-3", "Pa m")$.
@@ -69,7 +142,7 @@ $b = qty("7.78e-3", "Pa m")$.
 Der Plattenabstand des Kondensator beträgt $d = qty("6.00+-0.05e-3", "m")$. Für
 die Spannung hatten wir anfangs $500 V$ eingestellt, der Wert schwankte
 anschließend leicht, d.h. wir verwenden $U = qty("500.0+-2.0", "V")$. Damit
-können wir die Ladung des Tröpfchens berechnen (TODO reference einleitung):
+können wir die Ladung des Tröpfchens berechnen (siehe @q):
 
 $
     q = (v_f + v_s) sqrt((9 dot v_f eta^3)/(2 rho g)) (6 pi d)/U = qty("1.54+-0.07e-19", "C")
@@ -80,11 +153,11 @@ Die Fehler wurden mit der Python-Bibliothek `uncertainties` berechnet.
 
 == Histogramm
 
-TODO
-
-== Obere Grenze für die Elementarladung
-
-TODO
+#figure(
+    rotate(-90deg, image("Histogramm.jpg", width: 40%)),
+    caption: [Histogramm zur Anzahl der Messungen für bestimmte Ladungen der
+        Tröpfchen],
+)<histogram>
 
 == Systematischer Fehler
 
@@ -98,7 +171,7 @@ $ (3 Delta s)/(2 s) = 0.039 $
 
 Für die Öldichte nehmen wir an: $(Delta rho)/(rho) = 0.5 %$, für die Viskosität:
 $(Delta eta)/eta = 0.2 %$. Für den Abstand der Kondensatorplatten haben wir:
-$(Delta d)/d = 0.83%$ und für die Spannung $(Delta U)/U = 5%$.
+$(Delta d)/d = 0.83%$ und für die Spannung $(Delta U)/U = 0.5%$.
 
 Damit können wir den Systematischen Fehler abschätzen:
 
@@ -107,10 +180,41 @@ $
 $
 
 
-Manage
-=== Vorfaktoren
+=== Herleitung der Fehlerformel
+Zuerst drücken wir die Geschwindigkeiten $v_f$ und $v_s$ durch die Strecke $s$
+und die Zeiten $t_f$ und $t_s$ aus:
+$
+    q & = (v_f + v_s) sqrt((9 dot v_f eta^3)/(2 rho g)) (6 pi d)/U \
+      & = (s/t_f + s/t_s) sqrt((9 dot (s/t_f) eta^3)/(2 rho g)) (6 pi d)/U \
+      & = s^(3/2)(1/t_f + 1/t_s) sqrt((9 dot (1/t_f) eta^3)/(2 rho g)) (6 pi d)/U \
+$
+Um den Fehler von $q$ abzuschätzen berechnen wir zunächst das totale
+differential:
 
-TODO
+$
+    dif q = (q / d) dif d - (q / U)dif U + (3/2 q / eta) dif eta - (1/2 q / rho) dif rho - (1/2 q/g) dif g + (3/2 q/s) dif s + (dots)dif t_f + (dots) dif t_s
+$
+
+
+Wir nehmen an, dass die Zeitmessung keinen systematischen Fehler sondern nur
+statistischen Fehler hat, den wir später berücksichtigen werden. D.h. wir
+vernachlässigen in dieser Berechnung die Terme $dif t_f$ und $dif t_s$.
+
+Außerdem verwenden wir für $g$ einen Literaturwert, dessen Fehler im Verhältnis
+zu den anderen vernachlässigt werden kann.
+
+Wir haben also:
+
+$
+    (dif q)/q = (1 / d) dif d - (1 / U)dif U + (3/2 1 / eta) dif eta - (1/2 1 / rho) dif rho + (3/2 1/s) dif s
+$
+
+Nach den Regeln der Gausschen Fehlerfortpflanzung erhalten wir also:
+$
+    (Delta q)/q = sqrt(((3 Delta s)/(2 s))^2 + ((Delta rho)/(2 rho))^2 + ((3 Delta eta)/(2 eta))^2 + ((Delta d)/d)^2 + ((Delta U)/U)^2)
+$
+
+
 
 == Statistischer Fehler
 Wir verwenden diese fünf Werte für $q$, die aus einem Tropfen berechnet wurden,
@@ -128,7 +232,7 @@ $ sigma_M = sigma_E / sqrt(N) = sigma_E / sqrt(62) = 0.0073 $
 
 Nach der Gausschen Fehlerfortpflanzung können wir den Fehler von $q$ berchnen:
 
-$ (Delta q)/ q = sqrt(((Delta q_"sys")/q)^2 + sigma_M^2) = 6.4 $
+$ (Delta q)/ q = sqrt(((Delta q_"sys")/q)^2 + sigma_M^2) = 6.4 % $
 
 = Ergebnisse
 
@@ -141,17 +245,66 @@ $ z = abs(e' - e)/sqrt((Delta e')^2 + (Delta e)^2) = 1.52 $
 
 = Diskussion
 
-TODO
+
 
 == Histogramm
-In dem Histogramm (TODO Reference) sieht man sehr gut die quantisierung der
-Ladung....k
+In @histogram kann man sehr gut die Quantisierung der Ladung erkennen, da alle
+sich Peaks in ähnlichem Abstand befinden (und keine Messwerte dazwischen
+liegen).
+
+
+== Obere Grenze für die Elementarladung
+
+In der Excel-Tabelle war ein Schwellenwert von $hat(e) = qty("2.4e-19", "C")$
+vorgegeben. Alle Messungen mit einer Ladung von $q < hat(e)$ wurden als Tropfen
+mit genau einer Elementarladung klassifziert. Nun stellt sich die Frage, ob wir
+sicher sein können, dass dieser Grenzwert korrekt ist.
+
+An @histogram können wir ablesen, dass die kleinsten gemessenen Ladungen im
+Bereich $qtyrange("1.2e-19", "1.6e-19", "C")$ sind. Wir können dadurch aber noch
+nicht ausschließen dass diese Messungen Tropfen ein mit mehrern Elektronen
+$q approx N dot e$ gemessen haben.
+
+Eine genauere betrachtung des Histogramms ergibt allerdings, dass alle peaks in
+einem Abstand von ca. $qty("1.5e-19", "C")$ liegen. D.h. es wäre sehr
+unwahrscheinlich dass die erste Messung $q_1$ ein vielfaches der Elementarladnug
+ist $q_1 = N dot e$, da alle anderen Messungen dann zufälligerweise auch
+vielfache dieser Ladung sein müssten: $q_i = M dot N dot e$. Daraus können wir
+schließen, dass die erste Messung Tropfen mit nur einem Elektron gemessen hat
+und damit der Schwellenwert passend ist.
+
+
+
+
+
 
 == Fehler
 
--> Systematischer Fehler überwiegt
+Der systematische Fehler ist mit $(Delta q)_"sys"/q = 6.4%$ fast um Faktor 10
+größer als der statistische Fehler $sigma_M = 0.73 %$. Der systematische Fehler
+überwiegt den statistischen Fehler also dramatisch.
+
+#align(
+    center,
+    table(
+        columns: 2,
+        $(3 Delta s)/(2 s)$, num("0.039"),
+        $(Delta rho)/(2 rho)$, num("0.0025"),
+        $(3 Delta eta)/(2 eta)$, num("0.003"),
+        $(Delta d)/d$, num("0.0083"),
+        $(Delta U)/U$, num("0.005"),
+    ),
+)
+Man sieht, dass hier die Unsicherheit der Fallstrecke am meisten zum
+sytematischen Fehler beiträgt.
 
 == Mögliche Fehlerquellen
 
-Komisch dass (fast) alle einser kleine rals 1.6022 sind
+Wir haben die Zeitmessung immer direkt beim Umschalten der Spannung gestartet.
+Dadurch wird die Beschleunigungsphase, in der sich die Richtung der
+Geschwindigkeit der Tröpfchen ändert nicht berücksichtigt. Eine Möglicheit wäre
+gewesen, die Zeitmessung unabhängig von der Spannung zu machen d.h. man würde
+die Zeit stoppen wenn die Tröpfchen die gewünschte Distanz erreicht haben, die
+Spannung aber erst später umschalten und die Zeitmessung erst wieder starten
+wenn der Tropfen die Richtung gewechselt und die Skalenlinie überschritten hat.
 
