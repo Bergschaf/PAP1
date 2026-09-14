@@ -1,15 +1,98 @@
 #import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#set math.equation(numbering: "(1)")
+
+#let project(
+    title: "",
+    versuch_nr: "",
+    authors: (),
+    tutor: "",
+    date: "",
+    body,
+) = {
+    // Metadaten
+    set document(author: authors.map(a => a.name), title: title)
+
+    // Seitenlayout
+    set page(
+        paper: "a4",
+        margin: (left: 25mm, right: 25mm, top: 25mm, bottom: 25mm),
+        numbering: "1 / 1",
+        number-align: center,
+    )
+
+    // Schriftart und Textsatz
+    set text(font: "New Computer Modern", size: 11pt, lang: "de")
+    set par(justify: true, leading: 0.65em)
+    set heading(numbering: "1.1")
+
+    // Titelblatt / Kopfzeile
+    align(center)[
+        #text(weight: "bold", size: 16pt)[Physikalisches Anfängerpraktikum der
+            Universität Heidelberg] \
+        #v(1em)
+        #text(weight: "bold", size: 22pt)[Versuch #versuch_nr]
+
+        #text(weight: "bold", size: 22pt)[#title] \
+        #v(2em)
+    ]
+
+    grid(
+        columns: (2fr, 1fr),
+        align(left)[
+            *Durchführende(r):* \
+            #authors.at(0).name (#authors.at(0).email) \
+            #v(0.5em)
+            *Partner(in):* \
+            #authors.at(1).name
+        ],
+        align(right)[
+            *Tutor(in):* \
+            #tutor \
+
+            *Datum der Durchführung:* #date \
+        ],
+    )
+
+    v(3em)
+
+    // Inhaltsverzeichnis
+    outline(title: "Inhaltsverzeichnis", depth: 2)
+    pagebreak()
+
+    body
+}
+#show: project.with(
+    title: "Bestimmung der Elementarladung nach Millikan",
+    versuch_nr: "22",
+    authors: (
+        (
+            name: "Christian Krause",
+            email: "christian.krause@stud.uni-heidelberg.de",
+        ),
+        (name: "Aaron Boheim", email: "aaron.boheim@stud.uni-heidelberg.de"),
+    ),
+    tutor: "Jan Wentscher",
+    date: "9.09.2026",
+)
+
+#import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#set math.equation(numbering: "(1)")
+
+
+#set page(numbering: "1")
+
 #set math.equation(numbering: "1.")
 
 = Einleitung
 
 == Ziel
 Mit dem Millikan Versuch werden wir die quantisierung der elektrostatischen
-Ladung festellen und die Größe einer Elementarladung messen.
+Ladung festellen und den Betrag einer Elementarladung messen.
 
 == Physikalische Grundlagen
 
-Auf ein fallendes Öltröpfchen wirken drei Kräfte:
+Auf ein in Luft fallendes Öltröpfchen wirken drei Kräfte:
 
 $ "Gravitationskraft: " F_g = m dot g = 4/3 pi r^3 rho_"Öl" g $
 $ "Auftriebskraft: " F_a = 4/3 pi r^3 rho_"Luft" g $
@@ -20,8 +103,8 @@ $v$ des Tröpfchens. $eta$ bezeichnet die Viskosität der Luft, $rho_"Luft"$ und
 $rho_"Öl"$ die Dichte von Luft und Öl.
 
 Wenn das Tröpfchen eine elektrische Ladung $q$ trägt, wirkt in einem
-Plattenkondensator mit der Spannung $U$ und dem Plattenabstand zusätzlich noch
-die elektrische Kraft:
+Plattenkondensator mit der Spannung $U$ und dem Plattenabstand $d$ zusätzlich
+noch die elektrische Kraft:
 
 $ F_"el" = q E = q U/d $
 
@@ -307,4 +390,16 @@ gewesen, die Zeitmessung unabhängig von der Spannung zu machen d.h. man würde
 die Zeit stoppen wenn die Tröpfchen die gewünschte Distanz erreicht haben, die
 Spannung aber erst später umschalten und die Zeitmessung erst wieder starten
 wenn der Tropfen die Richtung gewechselt und die Skalenlinie überschritten hat.
+
+Da die Tropfen eine räumliche Ausdehnung haben, ist es manchmal schwer, genau
+abzuschätzen, wann der Tropfen eine Skalenlinie überschritten hat. Dadurch kommt
+wahrscheinlich zu dem Fehler der Skaleneinteilung ein Ablesefehler dazu.
+
+Der Kondensator war zwar durch eine Plexiglashaube abgedeckt, aber man hat
+trotzdem gemerkt, dass die Tropfen manchmal seitwärts driften, insbesondere wenn
+die Tür im Raum geöffnet oder geschlossen wurde oder sich Menschen im Raum
+bewegt haben. Eine noch bessere abdichtung zur Raumluft würde daher noch
+genauere Ergebnisse liefern.
+
+
 

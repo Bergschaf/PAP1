@@ -1,3 +1,4 @@
+#import "@preview/zap:0.6.0"
 #import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
 #set math.equation(numbering: "(1)")
 
@@ -62,8 +63,8 @@
     body
 }
 #show: project.with(
-    title: "Mathematisches TODO Pendel",
-    versuch_nr: "13",
+    title: "Strom- und Spannungsmessung",
+    versuch_nr: "23",
     authors: (
         (
             name: "Christian Krause",
@@ -71,8 +72,8 @@
         ),
         (name: "Aaron Boheim", email: "aaron.boheim@stud.uni-heidelberg.de"),
     ),
-    tutor: "Pham Huy Thang Le ",
-    date: "3.09.2026",
+    tutor: "Anton Walz",
+    date: "11.09.2026",
 )
 
 #import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
@@ -94,40 +95,71 @@ TODo
 
 = Auswertung
 == Berechnen der Widerstände im Spannungsteiler
-$U_B$ Batteriespannung $R_M$ Widerstand des Messgeräts Gesucht: $R$ Widerstand
-der Spannungsteilerwiderstände (beide gleich)
+Im folgenden bezeichnet $U_B$ Batteriespannung. Der Widerstand des Messgeräts
+$R_m$ setzt sich aus dem Innenwiderstands des Drehspulenmessgeräts $R_d$ und dem
+dahinter geschalteten zusätzlichen Widerstand $R_z$ zusammen:
+$ R_m = R_z + R_d $
 
+Ziel ist es, die beiden Widerstände $R = R_1 = R_2$ im Spannungsteiler zu
+messen.
 
-=== Bei messung der Batteriespannung
-Gesamtwiderstand bei Messung der Batteriespannung: $I_R_1$ strom durch den
-widerstand bei dieser Messung
-$ 1/R_"ges" = 1/R_m + 1/(2R) $
-$ U_B = I_m_1 R_m = I_R_1 dot 2 R $
-$ I_B_1 = I_m_1 + I_R_1 $
-$ U_B = R_"ges" dot I_B_1 $
+#figure(
+    image("Messung_1.jpg", width: 50%),
+    caption: [Messung der Batteriespannung],
+)
+Da das Messgerät bei der ersten Messung parallel zu den beiden Widerständen
+$R_1$ und $R_2$ geschaltet ist, können wir die Batteriespannung $U_B$
+folgendermaßen berechnen:
 
-=== Bei Messung der Spannung an einem Widerstand
-Sei $U_R_1$ die Spannung an dem Widerstand, an dem gemessen wird Sei $U_R_2$ die
-Spannung an dem Widersand an dem nicht gemessen wird $I_B_2$ Gesamtstrom bei
-dieser Messung $I_R_2$ Strom durch den Widerstand bei dieser Messung $R_"ges2"$
-ist der gesamtwiderstand der parallelschaltung aus einem Widerstand und dem
-Messgerät
+$ U_B = I_m_1 R_m $
 
-$ 1/R_"ges2" = 1/R_m + 1/R <=> R_"ges2" = 1/(1/R_m + 1/R) $
-$ I_B_2 = I_R_2 + I_m_2 $
-$ U_R_1 = R_"ges2" dot I_B_2 = R_m dot I_m_2 = R dot I_R_2 $
-$ U_B = U_R_1 + U_R_2 $
-$ U_B = I_B_2 dot R + I_B_2 dot R_"ges2" = I_B_2 dot (R + R_"ges2") $
+#figure(
+    image("Messung_2.jpg", width: 50%),
+    caption: [Messung der Spannung an einem Widerstand],
+)
+Wir haben diese Messung an beiden Widerständen durchgeführt, hier ist nurdie
+rechnung für einen Widerstand gezeigt, die andere funktioniert analog
 
-=== Rechnen:
+Sei $U_R_1$ die Spannung an dem Widerstand, an dem gemessen wird und $U_R_2$ die
+Spannung an dem Widerstand, an dem nicht gemessen wird. Wir bezeichnen den
+Gesamtstrom bei dieser Messung mit $I_B$ und mit $I_R_1$ den Strom durch den
+Widerstand (an dem parallel das Messgerät angeschlossen ist) bei dieser Messung.
+$R_"ges"$ ist der Gesamtwiderstand der Parallelschaltung aus einem Widerstand
+und dem Messgerät.
+
+Für Parallelschaltungen gilt:
+$ 1/R_"ges" = 1/R_m + 1/R <=> R_"ges" = 1/(1/R_m + 1/R) $<gl_rges2>
+mit dem Widerstand der Messchaltung $R_m$.
+$ U_R_1 = R_"ges2" dot I_B <=> I_B = U_R_1/R_"ges2" $<gl_r1>
+$ U_R_2 = R dot I_B <=> I_B = U_R_2/R $<gl_r2>
+
+Damit können wir eine Formel für den Widerstand $R$ aufstellen:
 
 $
-    U_R_2 / R = U_R_1/R_"ges2" \
-    (U_B - U_R_1) / R = U_R_1 dot (1/R_m + 1/R) \
-    (U_B - U_R_1) = U_R_1 dot (R/R_m + 1) \
-    (U_B - U_R_1)/U_R_1 - 1 = R/R_m \
-    ((U_B - U_R_1)/U_R_1 - 1) dot R_m = R = qty("9.05+-0.25e2", "Ohm") \
-$
+    I_R_2 &= I_B quad "da Reihenschaltung"\
+    U_R_2 / R &= U_R_1/R_"ges"quad #text[siehe @gl_r2 und @gl_r1] \
+    (U_B - U_R_1) / R &= U_R_1 dot (1/R_m + 1/R) quad #text[siehe @gl_rges2]\
+    (U_B - U_R_1) &= U_R_1 dot (R/R_m + 1) \
+    (U_B - U_R_1)/U_R_1 - 1 &= R/R_m \
+    ((U_B - U_R_1)/U_R_1 - 1) dot R_m &= R \
+$<gl_R>
+
+#figure(
+    table(
+        columns: 3,
+        [Messung an],
+        [Abgelesene Stromstärke $I_m$ in mA],
+        [Spannung $U$ in $V$],
+
+        [Battierie], num("8.0+-0.3"), num("4.00+-0.15"),
+        [$R_1$], num("2.1+-0.3"), num("1.05+-0.15"),
+        [$R_2$], num("2.1+-0.3"), num("1.05+-0.15"),
+    ),
+    caption: [Spannungsmessung mit dem Drehspulinstrument],
+)
+
+Damit erhalten wir mit @gl_R einen Wert für $R$:
+$ R = qty("9.05+-2.35e2", "Ohm") $
 
 == Messung mit dem Kompensator
 === Berechnen der Spannung
@@ -151,8 +183,8 @@ vernachlässigt werden.
         columns: 3,
         [], [$U$ in Skt], [$U$ in V],
         [Batteriespannung $U_B$], [$qty(821.0, 0.2)$], num("4.106+-0.013"),
-        [Widerstand 1 $U_R$], [$qty(410.9, 0.2)$], num("2.054+-0.013"),
-        [Widerstand 2 $U_R$], [$qty(810.7, 0.2)$], num("2.054+-0.013"),
+        [Widerstand 1 $U_R_1$], [$qty(410.9, 0.2)$], num("2.054+-0.013"),
+        [Widerstand 2 $U_R_2$], [$qty(810.7, 0.2)$], num("2.054+-0.013"),
     ),
     caption: [Spannungswerte am Spannungsteiler],
 )
@@ -170,6 +202,10 @@ Der Reststrom, der durch den Kompensator fließt ist also vernachlässigbar im
 Vergleich zum Messfehler.
 
 TODO Diskussion Maschenregel wird suber bestätigt
+
+=== Widerstand
+
+TODO Rechnung von Widerstand
 
 
 
