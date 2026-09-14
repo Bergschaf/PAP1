@@ -274,7 +274,8 @@ Hier haben wir die Ungenauigkeit des Multimeters, die wir online nachgeschlagen
 haben, als Fehler verwendet.
 
 Der tatsächliche Wellenwiderstand des Kabels vom Typ RG 58 beträgt
-$R_K = qty("50+-2", "Ohm")$.
+$R_K = qty("50+-2", "Ohm")$
+#footnote[https://www.cabletech.com.hk/uploads/RG58CU.pdf].
 
 
 = Diskussion
@@ -361,4 +362,9 @@ spezifizierten Widerstand des Kabels $R_K = qty("50+-2", "Ohm")$ beträgt
 $ z = abs(R - R_K)/sqrt(R^2 + R_K^2) = 2.1 $
 Beide Werte liegen also innerhalb ihres Fehlerbereichs.
 
-TODO Fehlerquellen
+Mögliche Fehlerquellen ist hier die geometrie des T-Stücks und des Kabels zum
+Signalgenerator, welches auch einen Einfluss auf die Reflektion hat. Das sieht
+man, da wir durch das Einstellen des Widerstands den Peak der Reflektion zwar
+verkleinern können, aber nicht ganz auslöschen, es ist immernoch Reflektion zu
+sehen.
+
