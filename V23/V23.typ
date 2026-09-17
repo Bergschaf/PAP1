@@ -165,10 +165,9 @@ $ R = qty("9.05+-2.35e2", "Ohm") $
 === Berechnen der Spannung
 Wir haben mit der Eichspannung eingestellt, dass $500$ Skalenteile des
 Kompensators der Eichspannung $U_e = qty("2.5000+-0.0005", "V")$ Spannung
-entsprechen. Hier müssen wir mit
+entsprechen.
 
 
-TODO Fehler Vernachlässigbar
 
 Um die Werte, die wir an der Skala ablesen in Spannungen umzurechen, muss also
 druch $200$ geteilt werden.
@@ -191,7 +190,7 @@ vernachlässigt werden.
 
 Hier beachten wir noch zusätzlich den Ablesefehler der Skala von $0.2"Skt"$.
 
-Nach der Maschenregel sollte für (TODO refernz zu zeichnung vom Spannungsteiler)
+Nach der Maschenregel sollte für // (TODO refernz zu zeichnung vom Spannungsteiler)
 die Spannungen gelten:
 $ U_B = 2 dot U_R $
 
@@ -201,13 +200,8 @@ $ z = abs(2 U_R - U_B)/((Delta(2 U_R))^2 + (Delta U_B)^2) = 0.092 $
 Der Reststrom, der durch den Kompensator fließt ist also vernachlässigbar im
 Vergleich zum Messfehler.
 
-TODO Diskussion Maschenregel wird suber bestätigt
-
-=== Widerstand
-
-TODO Rechnung von Widerstand
-
-
+Durch die Messung mit dem Kompensator können wir die Maschenregel also sehr
+genau bestätigen
 
 
 == Belastete Batterie
@@ -217,7 +211,7 @@ der Fehler von Skalenteilen in Volt umgerechnet.
 Auch der Strom, den wir durch den Schiebewiderstand eingestellt haben, ist
 Aufgrund der Ungenauigkeit unseres erweitereten Strommessgeräts Fehlerbehaftet.
 
-TODO Referenz zeichnung von Parallelschaltung mit dem Strommessgerät
+//TODO Referenz zeichnung von Parallelschaltung mit dem Strommessgerät
 
 $ 1/R_m = 1/R_d + 1/R_e $
 Hier bezeichnet $R_m$ den Widerstand des erweiterten Strommessgeräts, mit
@@ -240,8 +234,8 @@ Der Gesamtwiderstand dieser Parellelschaltung entspricht:
 $ R_m = 1/(1/R_d + 1/R_e) = qty("22.42+-0.04", "Ohm") $
 Die Fehler in dieser und in den anderen Formeln haben wir mit dem Python Package
 `uncertainites` berechnet. Die Erweiterung des Messbereichs funktioniert nach
-folgender Formel: (TODO referenz zu zeichnung von der Parallelschaltung von dem
-Erweiterten Strommessgerät)
+folgender Formel:
+//(TODO referenz zu zeichnung von der Parallelschaltung von dem Erweiterten Strommessgerät)
 
 $ I = I_d + I_R $
 Mit der Gesamtstromstärke $I$ die durch das Messgerät fließt, der im
@@ -268,7 +262,7 @@ die gemessene Stromstärke von $Delta I = qty("5.0", "mA")$
     caption: [$U(I)$ Diagramm für die belastete Batterie],
 )<plot>
 
-Für eine belastete Batterie gilt (TODO Referenz Einleitung):
+Für eine belastete Batterie gilt: //(TODO Referenz Einleitung):
 
 $ I = U_q / (R_i + R_L) $
 $ I R_i + I R_L = U_q $
@@ -322,6 +316,29 @@ $ U(I) = U_q - I R_i = U_q - (U_q R_i)/(2 R_i) = U_q/2 $
 
 
 = Diskussion
+
+== Widerstandsmessung
+Für die Widerstandsmessung ist das Drehspulinstrument (mit einem Innenwiderstand
+$< infinity$) gut geeignet, mit dem Kompensator wäre die Widerstandsberechnung
+(ohne zusätzliche Strommessung) nicht möglich gewesen.
+
+Die mit dem Kompensatur gemessene Batteriespannung stimmt innerhalb des
+Fehlerbereich mit der Batteriespannung, die wie mit dem Drehspuleninstrument
+gemessen haben überein. Die Abweichung beträgt
+
+$ z = abs(4.000 - 4.106)/sqrt(0.15^2 + 0.013^2) = 0.7 $
+
+== Belastete Battiere
+Wir haben eine Quellspannung $U_q = qty("4.140+-0.02", "V")$ berechnet. Diese
+ist ein wenig höher als die Klemmspannung im ersten Versuchsteil
+($U = qty("4.106+-0.013", "V")$), was plausibel ist, da auch dort ein kleiner
+Storm geflossen ist.
+
+== Leistungsanpassung
+Die von der Batterie abgegebene Leistung ist am Größten, wenn der Lastwiderstand
+gleich wie der Innenwiderstand der Batterie ist. Das ist aber kein sehr
+realistisches Szenario, da dieser mit $R_i = qty("2.56+-0.2", "Ohm")$ sehr klein
+ist.
 
 
 
