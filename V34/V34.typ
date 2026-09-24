@@ -295,3 +295,11 @@ berücksichtigen wäre noch eine Messung mit leerer Küvette notwendig gewesen.
 Eine mögliche Fehlerquelle beim zweiten Versuchsteil sind kleine Luftbläschen,
 die sich beim Einfüllen gebildet haben. Auch in diesem Teil könnte die Küvette
 verschmutzt gewesen sein.
+
+#figure(
+    image("Datenblatt.png", width: 80%),
+    caption: [Datenblatt für Brilliantblau (Quelle: Skript)],
+)
+
+Im Datenblatt der Brilliantblau Farbe sind zwei interessante Werte zu finden,
+einerseits der in Wasser unlösliche Anteil von $<= 0.1$. Das könnte z.B. durch
