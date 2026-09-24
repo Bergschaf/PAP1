@@ -301,5 +301,7 @@ verschmutzt gewesen sein.
     caption: [Datenblatt für Brilliantblau (Quelle: Skript)],
 )
 
-Im Datenblatt der Brilliantblau Farbe sind zwei interessante Werte zu finden,
-einerseits der in Wasser unlösliche Anteil von $<= 0.1$. Das könnte z.B. durch
+Im Datenblatt der Brilliantblau Farbe ist zu sehen, dass die Farbe eine Dichte
+von $rho = qty(1.48, "g/cm^3")$ hat. Dadurch könnte der im Wasser gelöste Teil
+sich eher am Bodens der Küvette aufhalten, was eine weitere mögliche
+Fehlerquelle für die Messung ist.
