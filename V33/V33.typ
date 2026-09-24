@@ -283,9 +283,10 @@ $486.1 nm$, $434.0 nm$ und $410.1 nm$.
 #figure(
     grid(
         columns: 2,
-        image("Protokoll.pdf", width: 65%, page: 1),
-        image("Protokoll.pdf", width: 65%, page: 2),
+        image("Protokoll.pdf", width: 75%, page: 1),
+        image("Protokoll.pdf", width: 75%, page: 2),
     ),
+    caption: [Versuchsprotokoll],
 )
 = Auswertung
 
@@ -389,12 +390,11 @@ $ 1/lambda = R_infinity (1/2^2 - 1/m^2) $
 
 
 Um die Werte in den Kontext zu setzten, zeigen wir in der letzten Spalte die
-Abweichung $z$ zum Literaturwert $R_infinity = qty("1.0973731568157", "m^-1")$.
-
-
 Abweichung $z$ zum Literaturwert
-$R_infinity = qty("1.0973731568157", "m^-1")$.Die Abweichung $z$ zweier
-fehlerbehafteter Werte $a_1$ und $a_2$ ist definiert als:
+$R_infinity = qty("1.0973731568157e7", "m^-1")$.
+
+Die Abweichung $z$ zweier fehlerbehafteter Werte $a_1$ und $a_2$ ist definiert
+als:
 $ z = abs(a_1 - a_2)/sqrt((Delta a_1)^2 + (Delta a_2)^2) $
 
 Die Fehler haben wir wie gewohnt mit Gaußscher Fehlerfortpflanzung berechnet.
