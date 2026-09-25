@@ -282,7 +282,7 @@ $486.1 nm$, $434.0 nm$ und $410.1 nm$.
 
 #figure(
     grid(
-        columns: 2,
+        columns: 1,
         image("Protokoll.pdf", width: 75%, page: 1),
         image("Protokoll.pdf", width: 75%, page: 2),
     ),
@@ -301,29 +301,29 @@ $486.1 nm$, $434.0 nm$ und $410.1 nm$.
 In @fig1 sieht man die Auslenkung des Teleskops als Funktion der Wellenlänge für
 10 der Hg-Spektrallinien.
 
-Die Kurve habe ich wir von Hand abgeschätzt. Da die Fehler so klein sind und im
-Prinzip alle Messwerte auf der Kurve liegen, habe ich keine weitere Fehlerkurven
-eingezeichnet.
-
-Für den Fehler der Auslenkungsmessung $Delta delta$ mit dem Nonius haben wir ein
-Skalenteil, also eine Bogenminute verwendet $Delta delta = deg(0, 1)$.
+Die Kurve und die Fehlerbanden habe ich von Hand abgeschätzt. Den Fehler der
+Auslenkungsmessung haben ich als $Delta delta = 0.1°$ abgeschätzt, da nicht nur
+der Ablesefehler des Nonios (eine Bogenminute), sondern auch Fehler der
+Messapperatur, Parallaxe vom Fadenkreuz, verschwommene Emissionslinien und
+menschliche Fehler beim Ausrichten dazu kommen.
 
 Anschließend haben wir mit @fig2 die Wellenlängen zu den gemessenen Auslenkungen
 der He-Spektrallinien bestimmt:
 
 #figure(
-    image("Zeichnung.pdf", page: 3, width: 80%),
+    image("Zeichnung.pdf", page: 5, width: 80%),
     caption: [Bestimmung der Wellenlängen der He-Spektrallinien],
 )<fig2>
 
 
 
 #let data = (
-    ("1", (666, 4), (667.8, 0)),
-    ("2", ("570.0", "2.0"), (587.6, 0)),
-    ("3", ("504.0", 1.5), ("501.6", 0)),
-    ("4", (491.5, 1.5), ("492.2", 0)),
-    ("5", ("471.0", "1.0"), ("471.3", 0)),
+    ("1", (669, 40), (667.8, 0)),
+    ("2", ("571", "20"), (587.6, 0)),
+    ("3", ("501", 17), ("501.6", 0)),
+    ("4", (492, 14), ("492.2", 0)),
+    ("5", ("471", "12"), ("471.3", 0)),
+    ("6", (445, 10), (447.1, 0)),
 )
 
 #figure(
@@ -338,6 +338,9 @@ der He-Spektrallinien bestimmt:
     caption: [Werte für die Wellenlängen der He-Spektrallinien],
 )
 
+Die Sigma-Abweichung $z$ zweier fehlerbehafteter Werte $a_1$ und $a_2$ ist
+definiert als:
+$ z = abs(a_1 - a_2)/sqrt((Delta a_1)^2 + (Delta a_2)^2) $
 == Bestimmung der Wellenlängen der $H_2$ Spektrallinien
 
 #figure(
@@ -347,9 +350,10 @@ der He-Spektrallinien bestimmt:
 
 
 #let data = (
-    ("1", (637, 3), (656.3, 0)),
-    ("2", ("481.0", "1.5"), (486.1, 0)),
-    ("3", ("428.0", "1.0"), ("434.0", 0)),
+    ("1", (640, 40), (656.3, 0)),
+    ("2", ("481", "13"), (486.1, 0)),
+    ("3", ("428", "11"), ("434.0", 0)),
+    ("4", ("407", "7"), ("410.1", "0")),
 )
 
 
@@ -381,9 +385,11 @@ $ 1/lambda = R_infinity (1/2^2 - 1/m^2) $
         [Berechneter Wert für $R_infinity$ in $m^(-1)$],
         [Abweichung $z$ zum Literaturwert],
 
-        [Rot], num("1.130+-0.005e7"), num("6.19"),
-        [Türkis], num("1.1088+-0.0035e7"), num("3.31"),
-        [Violett], num("1.1126+-0.0026e7"), num("5.86"),
+        [Rot], num("1.106+-0.019e7"), num("0.44"),
+        [Türkis], num("1.113+-0.029e7"), num("0.53"),
+        [Violett], num("1.11+-0.03e7"), num("0.38"),
+        [Ultraviolett], num("1.12+-0.07e7"), num("0.39"),
+        [Durchschnitt], num("1.113+-0.021e7"), num("0.75"),
     ),
     caption: [Verschiedene Werte für die Rydberg Konstante],
 )
@@ -393,22 +399,20 @@ Um die Werte in den Kontext zu setzten, zeigen wir in der letzten Spalte die
 Abweichung $z$ zum Literaturwert
 $R_infinity = qty("1.0973731568157e7", "m^-1")$.
 
-Die Abweichung $z$ zweier fehlerbehafteter Werte $a_1$ und $a_2$ ist definiert
-als:
-$ z = abs(a_1 - a_2)/sqrt((Delta a_1)^2 + (Delta a_2)^2) $
 
 Die Fehler haben wir wie gewohnt mit Gaußscher Fehlerfortpflanzung berechnet.
 Dafür haben wir das Python-Package `uncertainties` verwendet.
 = Ergebnisse
 
 #let data = (
-    ("1", (666, 4), (667.8, 0)),
-    ("2", ("570.0", "2.0"), (587.6, 0)),
-    ("3", ("504.0", 1.5), ("501.6", 0)),
-    ("4", (491.5, 1.5), ("492.2", 0)),
-    ("5", ("471.0", "1.0"), ("471.3", 0)),
-    ("6", (446.5, "1.0"), ("447.1", 0)),
+    ("1", (669, 40), (667.8, 0)),
+    ("2", ("571", "20"), (587.6, 0)),
+    ("3", ("501", 17), ("501.6", 0)),
+    ("4", (492, 14), ("492.2", 0)),
+    ("5", ("471", "12"), ("471.3", 0)),
+    ("6", (445, 10), (447.1, 0)),
 )
+
 #figure(
     smd-table(
         data,
@@ -421,20 +425,27 @@ Dafür haben wir das Python-Package `uncertainties` verwendet.
     caption: [Werte für die Wellenlängen der He-Spektrallinien],
 )
 
+
 #let data = (
-    ("1", (637, 3), (656.3, 0)),
-    ("2", ("481.0", "1.5"), (486.1, 0)),
-    ("3", ("428.0", "1.0"), ("434.0", 0)),
+    ("1", (640, 40), (656.3, 0)),
+    ("2", ("481", "13"), (486.1, 0)),
+    ("3", ("428", "11"), ("434.0", 0)),
+    ("4", ("407", "7"), ("410.1", "0")),
 )
+
+
 #figure(
     smd-table(
         data,
         label-header: [Nr],
         measurement-header: [Gemessene Wellenlänge $lambda$ in nm],
         literature-header: [Literaturwert für $lambda$ in nm],
+        smd-header: [Abweichung $z$],
+        smd-digits: 2,
     ),
-    caption: [Wellenlängen der $H_2$ Spektrallinien],
+    caption: [Werte für die Wellenlängen der $H_2$-Spektrallinien],
 )<tabh2>
+
 #figure(
     table(
         columns: 3,
@@ -442,12 +453,15 @@ Dafür haben wir das Python-Package `uncertainties` verwendet.
         [Berechneter Wert für $R_infinity$ in $m^(-1)$],
         [Abweichung $z$ zum Literaturwert],
 
-        [Rot], num("1.130+-0.005e7"), num("6.19"),
-        [Türkis], num("1.1088+-0.0035e7"), num("3.31"),
-        [Violett], num("1.1126+-0.0026e7"), num("5.86"),
+        [Rot], num("1.106+-0.019e7"), num("0.44"),
+        [Türkis], num("1.113+-0.029e7"), num("0.53"),
+        [Violett], num("1.11+-0.03e7"), num("0.38"),
+        [Ultraviolett], num("1.12+-0.07e7"), num("0.39"),
+        [Durchschnitt], num("1.113+-0.021e7"), num("0.75"),
     ),
     caption: [Verschiedene Werte für die Rydberg Konstante],
 )<tabry>
+
 
 
 = Diskussion
@@ -455,17 +469,22 @@ Dafür haben wir das Python-Package `uncertainties` verwendet.
 == Wellenlängenbestimmung des He-Spektrums
 
 Man sieht, dass die Werte innerhalb ihrer Fehlerbereiche mit den Literaturwerten
-übereinstimmen. Bei die zweite Linie weicht allerdings stark vom Literaturwert
-ab. Fine Mögliche Ursache wäre die Verwechselung mit einer anderen, schwächeren
-Linie oder die falsche Einstellung des Fernrohrs.
+übereinstimmen. Es fällt allerdings auf, dass die meisten Sigma-Abweichungen
+sehr klein sind. Man könnte den Fehler also vermutlich noch etwas genauer
+abschätzen, zum Beispiel durch den statistischen Fehler einer längeren
+Messreihe.
 
-== Wellenlängenbestimmung des $H_2$ Spektrums und berechnung der Rydberg-Konstante
-Man sieht in @tabh2 und @tabry, dass die Wellenlängen des $H_2$ Spektrums und
-die Werte für die Rydberg-Konstante deutlich von den Literaturwerten abweichen.
-Da wir die Kalibrierung des Aufbaus seit dem ersten Versuchsteil nicht verändert
-hatten, ist ein systematische Fehler unwahrscheinlich. Möglich wäre allerdings
-eine Änderung äußerer parameter (z.B. Temperatur oder Ausleuctung des Raumes).
-Die hohen Abweichungen lassen sich aber dadurch erklären, dass wir den Fehler
-beim Ablesen aus der Winkeldispersionskurve nur mit der oben erklärten Methode
-geschätzt, nicht aber korrekt (am Computer) ausgerechnet haben. Dadurch haben
-wir den Fehler vermutlich deutlich unterschätzt.
+== Wellenlängenbestimmung des $H_2$ Spektrums und Berechnung der Rydberg-Konstante
+
+Man sieht in @tabh2 und @tabry, dass die Wellenlängen der $H_2$ Spektrallinien
+und die Berechneten Werte für die Rydberg-Konstante innerhalb des Fehlerbereichs
+gut mit den Literaturwerten übereinstimmen.
+
+Auffällig ist, dass die Sigma-Abweichungen deutlich größer sind als beim ersten
+Versuchsteil.
+
+Um noch eine höhere Genauigkeit zu erzielen, könnte man eine hellere Lichtquelle
+verwenden. Dadurch wäre es möglich, den Spalt enger zu machen, wodurch man eine
+größere Auflösung des Prismas bezüglich der verschiedenen Wellenlängen erzielen
+würde. So könnte man das Fernrohr genauer auf die Spektrallinien einstellen.
+
