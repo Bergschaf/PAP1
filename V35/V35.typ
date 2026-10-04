@@ -1,4 +1,87 @@
 #import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#set math.equation(numbering: "(1)")
+
+#let project(
+    title: "",
+    versuch_nr: "",
+    authors: (),
+    tutor: "",
+    date: "",
+    body,
+) = {
+    // Metadaten
+    set document(author: authors.map(a => a.name), title: title)
+
+    // Seitenlayout
+    set page(
+        paper: "a4",
+        margin: (left: 25mm, right: 25mm, top: 25mm, bottom: 25mm),
+        numbering: "1 / 1",
+        number-align: center,
+    )
+
+    // Schriftart und Textsatz
+    set text(font: "New Computer Modern", size: 11pt, lang: "de")
+    set par(justify: true, leading: 0.65em)
+    set heading(numbering: "1.1")
+
+    // Titelblatt / Kopfzeile
+    align(center)[
+        #text(weight: "bold", size: 16pt)[Physikalisches Anfängerpraktikum der
+            Universität Heidelberg] \
+        #v(1em)
+        #text(weight: "bold", size: 22pt)[Versuch #versuch_nr]
+
+        #text(weight: "bold", size: 22pt)[#title] \
+        #v(2em)
+    ]
+
+    grid(
+        columns: (2fr, 1fr),
+        align(left)[
+            *Durchführende(r):* \
+            #authors.at(0).name (#authors.at(0).email) \
+            #v(0.5em)
+            *Partner(in):* \
+            #authors.at(1).name
+        ],
+        align(right)[
+            *Tutor(in):* \
+            #tutor \
+
+            *Datum der Durchführung:* #date \
+        ],
+    )
+
+    v(3em)
+
+    // Inhaltsverzeichnis
+    outline(title: "Inhaltsverzeichnis", depth: 2)
+    pagebreak()
+
+    body
+}
+#show: project.with(
+    title: "Fotoeffekt",
+    versuch_nr: "35",
+    authors: (
+        (
+            name: "Christian Krause",
+            email: "christian.krause@stud.uni-heidelberg.de",
+        ),
+        (name: "Aaron Boheim", email: "aaron.boheim@stud.uni-heidelberg.de"),
+    ),
+    tutor: "Felix Maximilian Graf",
+    date: "24.09.2026",
+)
+
+#import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#set math.equation(numbering: "(1)")
+
+
+#set page(numbering: "1")
+
 
 = Einleitung
 == Ziel
@@ -81,7 +164,6 @@ $E_"kinmax"$.
     caption: [Strom- und Spannungskennlinie einer realen Fotozelle],
 )<real>
 
-TODO Bildquellen
 
 In @real sieht man die Spannungsquelle einer realen Fotozelle. Es fällt auf,
 dass der maximale Fotostrom nicht direkt bei $U = 0V$ erreicht wird. Das liegt
@@ -94,6 +176,8 @@ $U^2$ ist (aufgrund der Geometrie von Anode und Kathode).
 
 An der Sperrspannung $U_s$ gilt dann:
 $ e U_s = E_"kinmax" = h nu - A prop sqrt(I) $
+
+(Die Bilder stammen aus dem Skript).
 
 
 = Protokoll
@@ -604,12 +688,34 @@ insbesondere stark negtive Vorspannungen betrifft. Ein Indiz dafür ist, dass
 (betragsmäßig) deutlich kleineren Bereich der Vorspannungen stattfinden (im
 vergleich zu @fig1, @fig2 und @fig3).
 
+Im Skript ist angegeben, dass wir aufgrund der Form der Anode die Wurzel aus der
+korrigierten Spannung bilden sollen. Es könnte sein, dass diese Approximation in
+unserem Fall zu ungenau war, z.B. durch leichte Abweichungen in unserem
+Versuchsaufbau.
+
+=== Verbesserungsmöglichkeiten
+
+Um eine höhere Genauigkeit zu erziehlen könnte man eine Lichtquelle mit höherer
+Intensität verwenden, was den Fotostrom erhöht und daher mit geringerem Fehler
+messbar machen würde. Eine Möglichkeit wäre es, mehrere Laser mit verschiedenen
+Wellenlängen anstelle der Spektrallinien der Quecksilberlampe zu verwenden.
+
+Außerdem könnte man die Messung bei einer deutlich niedrigeren Temperatur (nahe
+$T approx 0 K$) durführen. Dadurch würde der untere Teil der Spannungskurve eher
+der idealen Form (siehe @ideal) entsprechen, was die Bestimmung der
+Sperrspannung vereinfachen würde.
+
+Weiterhin wäre es interessant, andere Anodenformen zu verwenden, wie zum
+Beispiel ein Gitter. Dadurch könnte man überprüfen, ob die Form der Anode für
+die Abweichung unserer Diagramme von der erwarteten Form verantwortlich ist.
+
 == Planck Konstante
 
 Unser berechneter Wert liegt mit einer Abweichung von $1.4 sigma$ im
 Fehlerbereich des Literaturwerts. Hier ist allerdings zu beachten, dass unser
 berechnete Wert einen sehr hohen prozentualen Fehler von ca. $23%$ aufweist.
 Grund dafür ist die starke Streuung und die großen Fehler der Sperrspannungen.
-TODOhler der Sperrspannungen. TODO
+
+
 
 
