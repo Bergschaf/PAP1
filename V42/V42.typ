@@ -818,8 +818,31 @@ TODO
         #footnote[Die Literaturwerte sind aus dem PAP-Skript]
     ],
 )<res_warm>
-TODO
 
+#figure(
+    table(
+        columns: 3,
+        [Material],
+        [Gemessene Spezifische Wärmekapazität $c_x$ in
+            $"J" "K"^(-1)"Kg"^(-1)$],
+        [Gemessene Molare Wärmekapazität in $"J" "K"^(-1) "mol"^(-1)$],
+
+        [Blei], num("120.9+-0.8"), num("25.05+-0.17"),
+        [Alu], num("729+-4"), num("19.67+-0.11"),
+        [Graphit], num("401.7+-2.7"), num("4.824+-0.032"),
+    ),
+    caption: [Wärmekapazität bestimmt in flüssigem Stickstoff],
+)
+#figure(
+    table(
+        columns: 3,
+        [Material], [Verhältnis $R_c$], [Debye Temperatur in $K$],
+        [Blei], num("1.1+-0.5"), num("100"),
+        [Alu], num("0.87+-0.23"), num("300+-300"),
+        [Graphit], num("0.51+-0.18"), num("950+-1000"),
+    ),
+    caption: [Verhältnis der Wärmekapazitäten und Debye Temperatur],
+)<res_ratio>
 = Diskussion
 
 == Wasserwert
@@ -849,5 +872,14 @@ die nicht einfach durch drei Freiheitsgrade erklärt werden kann.
 
 == Wärmekapazitäten in flüssigem Stickstoff
 
+Mögliche Fehlerquellen:
+- Stickstoff spritzt raus
+- Verdampfungsrate nicht konstant
+- TODO
+
+== Verhältnis der Wärmekapazitäten
+Wenn wir einfach die Verhältnisse aus den beiden gemessenen Wärmekapazitäten
+bilden, erhalten wir aufgrund der vorher genannten Gründe viel zu große Fehler.
+Um trotzdem die Debye Temperaturen abschätzen zu können
 
 
