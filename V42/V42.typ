@@ -68,11 +68,11 @@
     authors: (
         (
             name: "Christian Krause",
-            email: "christian.krause\@stud.uni-heidelberg.de",
+            email: "christian.krause@stud.uni-heidelberg.de",
         ),
         (
             name: "Alois Bachmann",
-            email: "alois.bachmann\@stud.uni-heidelberg.de",
+            email: "alois.bachmann@stud.uni-heidelberg.de",
         ),
     ),
     tutor: "Michael Gotzmann",
@@ -357,7 +357,7 @@ Stickstoffs bezeichnet. Damit folgt
 
 $
     c_x =
-    (Q_V m_V)/(m_x (T_1-T_2)) .
+    Q/(m_x (T_1-T_2)) .
 $<c_x_stickstoff>
 
 Da auch ohne Probekörper Stickstoff durch die Umgebung verdampft, muss diese
@@ -466,7 +466,7 @@ korrigiert.
     caption: [Graphische Bestimmung von $overline(T)$],
     image("Zeichnung.pdf", page: 1, width: 80%),
 )<T_bar>
-TODO rumargumentieren warum man die riesigen fehlerbalken ignoriert
+In der Diskussion gehe ich näher auf die Wahl der Fehlergeraden aus.
 
 $ overline(T) = qty("53.06+-1.2", "Celsius") $
 
@@ -558,9 +558,10 @@ $C_x$ zu berechnen. Die Molare Wärmekapazität $c_"x mol"$ ergibt sich aus dem
 Produkt der spezifischen Wärmekapazität und der molaren Masse $M_"mol"$:
 $ c_"x mol" = c_x dot M_"mol" $
 
-TODO Einleitung
+Außerdem vergleichen wir die molare Wärmekapazität mit der Vorhersage der
+Dulong-Petit'schen Regel:
 
-$c_"mol DP" = 3 R = qty("24.942", "J/K/mol")$
+$ c_"mol DP" = 3 R = qty("24.942", "J/K/mol") $
 
 #figure(
     pad(x: -5em, table(
@@ -675,7 +676,6 @@ $
         ((partial c_x)/(partial T_2) Delta T_2)^2
     ) .
 $
-$ dif c_x = "TODO" $
 
 Zur Berechnung der molaren Wärmekapazität wird der Literaturwert für die Molare
 Masse $M_"mol"$ verwendet:
@@ -695,8 +695,25 @@ beachten, dass der Fehler sich quadratisch addiert.
 
 Auch bei der Massendifferenz wird der Fehler wieder quadratisch addiert.
 
-TODO TODO
+Um die Wärmemenge $Q$ zu berechnen, die vom Stickstoff an den Probekörper
+abgegeben wurde, müssen wir zunächst die Verdunstungsrate $V$ bestimmen.
 
+Dafür haben wir am Anfang die Massenabnahme (ohne Probekörper) über ein
+bestimmte Zeit gemessen. Dadurch erhalten wir die Verdampfungsrate von
+
+$
+    V = qty("0.01292+-0.00012", "g/s") quad quad quad
+    #footnote[(Die triviale Fehlerformel wird hier jetzt nicht nochmal
+        aufgeführt)]
+$
+
+Da wir die Dauer $t$ gemessen haben während der, während der die Probekörper im
+Stockstoff waren, ziehen wir von der Masse des verdunsteten Stickstoff $m_V$ den
+regulär verdunsteten Stickstoff ab.
+
+$ Q = Q_V ( m_V - V t) $
+
+Hier bezeichnet $Q_V$ die Verdunstungswärme.
 
 Wir haben nun alle Werte berechnet, die wir benötigen um die Wärmekapazität der
 Probekörper $c_x$ mit @c_x_stickstoff zu berechnen.
@@ -722,6 +739,83 @@ temperaturabhängig ist.
     ),
     caption: [Wärmekapazität bestimmt in flüssigem Stickstoff],
 )
+
+=== Fehlerrechnung
+Für die Fehlerrechnung wird die Gleichung
+
+$
+    c_x = (Q_V (m_V - V t))/(m_x (T_1-T_2))
+$
+
+verwendet. Die benötigten partiellen Ableitungen sind
+
+$
+    (partial c_x)/(partial Q_V)
+    = (m_V-V t)/(m_x(T_1-T_2)) ,
+$
+
+$
+    (partial c_x)/(partial m_V)
+    = Q_V/(m_x(T_1-T_2)) ,
+$
+
+$
+    (partial c_x)/(partial V)
+    = -Q_V t/(m_x(T_1-T_2)) ,
+$
+
+$
+    (partial c_x)/(partial t)
+    = -Q_V V/(m_x(T_1-T_2)) ,
+$
+
+$
+    (partial c_x)/(partial m_x)
+    = -Q_V(m_V-V t)/(m_x^2(T_1-T_2)) ,
+$
+
+und
+
+$
+    (partial c_x)/(partial T_1)
+    = -Q_V(m_V-V t)/(m_x(T_1-T_2)^2) .
+$
+
+Für $T_2$ ergibt sich
+
+$
+    (partial c_x)/(partial T_2)
+    = Q_V(m_V-V t)/(m_x(T_1-T_2)^2) .
+$
+
+Damit folgt für die Unsicherheit
+
+$
+    Delta c_x =
+    sqrt(
+        ((partial c_x)/(partial Q_V) Delta Q_V)^2
+        +
+        ((partial c_x)/(partial m_V) Delta m_V)^2
+        +
+        ((partial c_x)/(partial V) Delta V)^2
+        +
+        ((partial c_x)/(partial t) Delta t)^2
+        + \
+        ((partial c_x)/(partial m_x) Delta m_x)^2
+        +
+        ((partial c_x)/(partial T_1) Delta T_1)^2
+        +
+        ((partial c_x)/(partial T_2) Delta T_2)^2
+    ) .
+$
+
+Der Fehler der molaren Wärmekapazität wird wie bei der Messung im Wasser über
+den Fehler der spezifischen Wärmekapazität bestimmt. Da der Fehler der molaren
+Masse vernachlässigbar ist, gilt
+
+$
+    Delta c_"x mol" = Delta c_x dot M_"mol" .
+$
 
 == Bestimmnug der Debye-Temperatur
 
@@ -777,9 +871,32 @@ $
 
 gebildet.
 
-Für die Fehlerfortpflanzung gilt
+Wir berechnen also die partiellen Ableitungen:
 
-TODO
+$
+    (partial R_c)/(partial c_(x N_2))
+    = 1/c_(x H_2 O)
+$
+
+und
+
+$
+    (partial R_c)/(partial c_(x H_2 O))
+    = -c_(x N_2)/(c_(x H_2 O))^2 .
+$
+
+Damit erhalten wir die Fehlerformel:
+
+
+$
+    Delta R_c =
+    sqrt(
+        ((partial R_c)/(partial c_(x N_2)) Delta c_(x N_2))^2
+        +
+        ((partial R_c)/(partial c_(x H_2 O)) Delta c_(x H_2 O))^2
+    ) .
+$
+
 
 = Ergebnisse
 
@@ -835,14 +952,19 @@ TODO
 )
 #figure(
     table(
-        columns: 3,
-        [Material], [Verhältnis $R_c$], [Debye Temperatur in $K$],
-        [Blei], num("1.1+-0.5"), num("100"),
-        [Alu], num("0.87+-0.23"), num("300+-300"),
-        [Graphit], num("0.51+-0.18"), num("950+-1000"),
+        columns: 4,
+        [Material],
+        [Verhältnis $c_(x N_2) / c_(x H_2 O)$],
+        [Debye Temperatur in $K$],
+        [Literaturwert für die Debye Temperatur in $K$],
+
+        [Blei], num("0.937+-0.006"), num("180+-20"), num("95"),
+        [Alu], num("0.810+-0.005"), num("390+-20"), $430$,
+        [Graphit], num("0.566+-0.004"), num("700+-20"), $2230$,
     ),
     caption: [Verhältnis der Wärmekapazitäten und Debye Temperatur],
 )<res_ratio>
+
 = Diskussion
 
 == Wasserwert
@@ -872,14 +994,31 @@ die nicht einfach durch drei Freiheitsgrade erklärt werden kann.
 
 == Wärmekapazitäten in flüssigem Stickstoff
 
-Mögliche Fehlerquellen:
-- Stickstoff spritzt raus
-- Verdampfungsrate nicht konstant
-- TODO
+Es fällt auf, dass der Fehler hier sehr klein ist. Mögliche Fehlerquellen, die
+wir nicht beachtet haben sind:
+- Flüssige Stickstofftröpfchen, die aus dem Gefäß herauspritzen
+- Wir nehmen an, dass die Verdampfungsrate konstant ist. Dabei vernachlässigen
+    wir u.A. Temperaturänderungen im Raum, Luftzströmungen und den Einfluss des
+    Probekörpers
 
 == Verhältnis der Wärmekapazitäten
 Wenn wir einfach die Verhältnisse aus den beiden gemessenen Wärmekapazitäten
 bilden, erhalten wir aufgrund der vorher genannten Gründe viel zu große Fehler.
-Um trotzdem die Debye Temperaturen abschätzen zu können
+Um trotzdem die Debye Temperaturen abschätzen zu können, habe ich für die
+Berechnung des Verhältnisses den Litearturwert für $c_(x H_2 O)$ verwendet.
+Dadruch unterschätzen wir den Fehler allerdings stark. Das Ablesen der
+Debye-Temperatur aus dem Diagramm ist zudem sehr ungenau, da die Auflesung der
+$x$-Achse sehr ungenau ist.
 
+Für @res_ratio habe ich keine Sigma-Abweichungen berechnet, da diese sehr wenig
+aussagekräftig sind, da der Fehler der Debye-Temperatur nur eine sehr sehr grobe
+abschätzung ist.
+
+Man sieht trotzdem, dass unsere gemessene Debye-Temperatur für ALuminium sehr
+nah am Literaturwert liegt.
+
+Für den Literaturwert der Debye-Tempaeratur ist der Literaturwert für Diamant
+eingetragen, weshalb nur ein qualitativer Vergleich sinnvoll ist. Man sieht auf
+jeden Fall, dass beide Temperaturen (im vergleich zu den anderen Probekörpern)
+sehr groß sind.
 
