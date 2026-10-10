@@ -119,7 +119,7 @@ wird das Gasthermometer mithilfe bekannter Temperaturpunkte geeicht. Für den
 Siedepunkt des Wassers muss der gemessene Druck auf Normalbedingungen
 umgerechnet werden, da die Siedetemperatur vom Umgebungsdruck abhängt. Es gilt
 
-$ p_"NB" = p_"gem" * (1013.25 "hPa") / p_"LD", $
+$ p_"NB" = p_"gem" * (1013.25 "hPa") / p_"LD", $<normal>
 
 wobei $p_"gem"$ den gemessenen Gasdruck und $p_"LD"$ den gemessenen Luftdruck
 bezeichnet. $p_"NB"$ ist der auf den Normaldruck von $1013.25 "hPa"$
@@ -132,7 +132,7 @@ Ein weiteres Messverfahren ist das Platin-Widerstandsthermometer. Dessen
 elektrischer Widerstand hängt von der Temperatur ab und lässt sich im
 betrachteten Bereich durch ein Polynom zweiten Grades beschreiben:
 
-$ R(T) = R_0 (1 + A T + B T^2). $
+$ R(T) = R_0 (1 + A T + B T^2). $<glR>
 
 Dabei ist $R_0$ der Widerstand bei #qty(0, "Celsius"), während $A$ und $B$
 materialabhängige Koeffizienten sind. Für ein Pt100-Thermometer gilt
@@ -188,7 +188,12 @@ Für diese Einleitung wurde KI als Formulierungshilfe eingesetzt.
 
 == Eichung des Gastherometers
 
-TODO bissle labern mit dem einen Wert auf normalbedingnugen berechnet
+In @figzwei habe ich zunächst die zwei gemessenen Referenzpunkte eingetragen,
+den Druck den wir bei $qty(0, "Celsius")$ (Eiswassser) gemessen haben und den
+Druck beim Siedepunkt von Wasser. Da der Siedepunkt von Wasser vom Luftdruck
+abhängt, mussten wir den Druck nach @normal noch auf Normalbedingungen
+umrechnen, bevor wir ihn ins Diagram eingetragen haben.
+
 
 #figure(
     image("zwei_eichpunkte.svg"),
@@ -204,8 +209,7 @@ Im Flüssigen Stickstoff haben wir einen Druck von
 $p_N = qty("255.0+-1.0", "hPa")$ gemessen. Aus dem Diagramm erhält man damit
 eine Temperatur von $T_N_1 = qty(-194.4, "Celsius")$.
 
-Dieser Wert ist sehr nah (TODO besser) am Literaturwert
-$T_N_"lit" = qty(-195.8, "Celsius")$.
+Dieser Wert ist sehr nah am Literaturwert $T_N_"lit" = qty(-195.8, "Celsius")$.
 
 Wenn wir den Literaturwert als weiteren Eichpunkt verwenden, erhalten wir:
 
@@ -257,6 +261,9 @@ haben, bestimmen:
         berechnet],
 )<figT>
 
+Die Fehler haben wir nach den Formeln der Gaußschen Fehlerfortpflanzung
+berechnet. Dafür haben wir das Python package `uncertainties` verwendet.
+
 == PT-100 Element
 In @figT haben wir die Temperatur für jeden Messpunkt im Wasser bestimmt.
 
@@ -273,8 +280,8 @@ Temperatur auftragen: #figure(
 Die Steigung der Auslgeichsgerade beträgt:
 $m = num("0.388+-0.008") #h(0.3em) Omega "°C"^(-1)$
 
-TODO Referenz einleitung: Der lineare Teil der Temperaturabhängigkeit des PT-100
-Widerstands beträgt:
+Der lineare Teil der Temperaturabhängigkeit des PT-100 Widerstands beträgt
+(siehe @glR):
 
 $ R(T) = R_0 A T $
 mit $A = num("3.9085e-3") #h(0.3em) "°C"^(-1)$.
@@ -303,7 +310,14 @@ Diskussion aufgeführt.
 = Diskussion
 
 == Gastherometer
-TODO
+Die Fehler der Eichkurve des Gastherometers sind schwer einzuzeichnen, da die
+Fehlerbalken sehr klein sind. Wir können die Werte für die Nullpunkte daher nur
+qualitativ mit dem Literaturwert
+$T_0 = qty("0", "Kelvin") approx qty(-273.15, "Celsius")$ vergleichen.
+
+Es fällt allerdings auf, dass der Nullpunkt aus @figdrei mit
+$T_0 = qty(-271.1, "Celsius")$ deutlich näher am Litearturwert liegt als der
+Wert $T_0 = qty(-268, "Celsius")$ aus @figzwei.
 
 == PT-100 Element
 
